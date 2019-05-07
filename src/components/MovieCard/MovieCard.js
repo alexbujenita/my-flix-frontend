@@ -4,30 +4,32 @@ import './MovieCard.css'
 
 class MovieCard extends Component {
 
-    state = {
-        hoverCard: false
-    }
-
-    mouseOnCard = () => {
-        this.setState({ hoverCard: true })
-    }
-
-    mouseOfCard = () => {
-        this.setState({ hoverCard: false })
-    }
 
     render() {
-        const { title, poster_path } = this.props.movie
-        return (<div className='movie-card' onMouseEnter={this.mouseOnCard} onMouseLeave={this.mouseOfCard}>
-            {this.state.hoverCard ?
-                <img className='card-image-blur' src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt='' />
-                :
-                <img className='card-image' src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt='' />
-            }
-        </div >
+
+        const {movie, selectMovie, genres} = this.props
+        const {poster_path, title, release_date, genre_ids, overview} = movie
+
+        return (
+            <div className = "movie-card" onClick={(event)=>selectMovie(movie)}>
+            <div className='card'>
+                <div className='poster'>
+                    <img className="card-image" src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt='../../../public/images/poster_small.jpg' />
+                </div>
+                <div className='details'>
+                    <h2>{title}</h2>
+                    <div className='release-date'>Release date: {release_date}</div>
+                    <div className="tags">
+                    {genre_ids.map(genre_id => <span key={genre_id} className="genre">{genres.find(genre => genre.id === genre_id).name}</span>)}
+                    </div>
+                    <div className="info">
+                        <p>{overview}</p>
+                    </div>
+                </div>
+            </div>
+            </div>
         )
     }
-
 }
 
 export default MovieCard
