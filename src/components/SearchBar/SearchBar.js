@@ -8,8 +8,8 @@ class SearchBar extends Component {
   render() {
     const { setSearchTerm, inputValue, handleSearch, adult, setAdult } = this.props
     return (
-      <div className='form-movie-container'>
-        <form onSubmit={handleSearch} className='navbar'>
+      <div className='search-form'>
+        <form onSubmit={handleSearch} >
           <label>
             Search for a movie title:
               <input type='text' required={true} onChange={e => setSearchTerm(e.target.value)} value={inputValue} />

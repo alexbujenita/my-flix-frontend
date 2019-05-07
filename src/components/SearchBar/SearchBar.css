@@ -1,9 +1,8 @@
-.navbar {
+.search-form {
   background-color: white;
-  height: 100px;
+  height: 50px;
+  top: 0;
+  position: sticky;
+  z-index: 100;
 }
 
-.form-movie-container {
-  display: grid;
-  grid-template-rows: 1 fr 9fr
-}
