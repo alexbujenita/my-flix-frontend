@@ -200,8 +200,6 @@ class App extends React.Component {
         <div className="sidebar-container">
           <SideBar movies={movies} />
         </div>
-
-        {this.state.searchResults ? (
           <div className="navbar-movie-container">
             <SearchBar
               setSearchTerm={setSearchTerm}
@@ -220,42 +218,19 @@ class App extends React.Component {
                 removeMovieFromCollection={removeMovieFromCollection}
                 myMovieIds={myMovieIds}
               />
-            ) : (
-              <SearchResults
+            ) : this.state.searchResults ? <SearchResults
                 handleGoBack={handleGoBack}
                 movies={searchResults}
                 selectMovie={selectMovie}
                 genres={genres}
-              />
-            )}
-          </div>
-        ) : (
-          <div className="navbar-movie-container">
-            <SearchBar
-              setSearchTerm={setSearchTerm}
-              inputValue={searchTerm}
-              handleSearch={handleSearch}
-              adult={adult}
-              setAdult={setAdult}
-            />
-            {this.state.selectedMovie ? (
-              <MovieInfo
-                movie={selectedMovie}
-                deselectMovie={deselectMovie}
-                cast={movieCast}
-                trailer={movieTrailer}
-                addMovieToCollection={addMovieToCollection}
-                removeMovieFromCollection={removeMovieFromCollection}
-                myMovieIds={myMovieIds}
-              />
-            ) : (
+              /> : 
               <MovieList
                 movies={movies}
                 selectMovie={selectMovie}
                 genres={genres}
                 getMoreMovies={getMoreMovies}
               />
-            )}
+            }
           </div>
         )}
       </div>
