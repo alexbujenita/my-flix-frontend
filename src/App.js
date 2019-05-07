@@ -6,6 +6,7 @@ import SideBar from './components/SideBar/SideBar';
 import MovieInfo from './components/MovieInfo/MovieInfo';
 
 import API from './API'
+import SearchBar from './components/SearchBar/SearchBar';
 
 class App extends React.Component {
 
@@ -14,9 +15,12 @@ class App extends React.Component {
     myMovieIds: [],
     myMovies: [],
     page: 1,
+    searchTerm: '',
+    adult: false,
     selectedMovie: null,
     movieTrailer: {},
     movieCast: [],
+    searchResults: null,
     genres: [
       {
         "id": 28,
@@ -131,11 +135,30 @@ class App extends React.Component {
   deselectMovie = () => {
     this.setState({ selectedMovie: null })
   }
+  // SEARCH
+  setSearchTerm = (searchTerm) => {
+    this.setState({ searchTerm })
+  }
+
+  setAdult = () => {
+    this.setState({
+      adult: !this.state.adult
+    })
+  }
+
+  handleSearch = (event) => {
+    event.preventDefault();
+    API.searchMovie(this.state.searchTerm, this.state.adult)
+    .then(movies => this.setState({ searchResults: movies }))
+  }
+
+  // 
 
   render() {
 
-    const { movies, selectedMovie, movieCast, movieTrailer, genres, myMovieIds } = this.state
-    const { selectMovie, deselectMovie, getMoreMovies, addMovieToCollection, removeMovieFromCollection } = this
+    const { movies, selectedMovie, movieCast, movieTrailer, genres, myMovieIds, searchTerm, adult } = this.state
+    const { selectMovie, deselectMovie, getMoreMovies, addMovieToCollection,
+            removeMovieFromCollection, setSearchTerm, handleSearch, setAdult } = this
 
     return (
       <div className="main-container">
@@ -143,7 +166,13 @@ class App extends React.Component {
           <SideBar movies={movies} />
         </div>
         <div className="navbar-movie-container">
-          <div className="navbar">NAVBAR</div>
+          <SearchBar 
+            setSearchTerm={setSearchTerm}
+            inputValue={searchTerm}
+            handleSearch={handleSearch}
+            adult={adult}
+            setAdult={setAdult}
+             />
           {this.state.selectedMovie ?
             <MovieInfo movie={selectedMovie} deselectMovie={deselectMovie} cast={movieCast} trailer={movieTrailer} addMovieToCollection={addMovieToCollection} removeMovieFromCollection={removeMovieFromCollection} myMovieIds={myMovieIds} />
             :
