@@ -1,0 +1,38 @@
+.sidebar {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(90, 88, 88);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar h3 {
+    padding: 6px 8px 6px 16px; 
+    position: absolute;
+    bottom: 5px;
+    color: white;
+    font-size: 35px;
+}
+
+.sidebar button {
+    padding: 6px 8px 6px 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.sidebar button:hover {
+    color: black;
+}
+
+.sidebar button:active {
+    transform: translateY(4px);
+  }
