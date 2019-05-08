@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { Route, Link, Switch } from 'react-router-dom';
 
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
@@ -169,8 +170,6 @@ class App extends React.Component {
     })
   }
 
-  //
-
   render() {
     const {
       movies,
@@ -197,45 +196,59 @@ class App extends React.Component {
 
     return (
       <div className="main-container">
+
         <div className="sidebar-container">
           <SideBar movies={movies} />
         </div>
-          <div className="navbar-movie-container">
-            <SearchBar
-              setSearchTerm={setSearchTerm}
-              inputValue={searchTerm}
-              handleSearch={handleSearch}
-              adult={adult}
-              setAdult={setAdult}
+
+        <div className="navbar-movie-container">
+          {this.state.selectedMovie ? null : <SearchBar
+            setSearchTerm={setSearchTerm}
+            inputValue={searchTerm}
+            handleSearch={handleSearch}
+            adult={adult}
+            setAdult={setAdult}
+          />}
+
+          {this.state.selectedMovie ?
+            <MovieInfo
+              movie={selectedMovie}
+              deselectMovie={deselectMovie}
+              cast={movieCast}
+              trailer={movieTrailer}
+              addMovieToCollection={addMovieToCollection}
+              removeMovieFromCollection={removeMovieFromCollection}
+              myMovieIds={myMovieIds}
             />
-            {this.state.selectedMovie ? (
-              <MovieInfo
-                movie={selectedMovie}
-                deselectMovie={deselectMovie}
-                cast={movieCast}
-                trailer={movieTrailer}
-                addMovieToCollection={addMovieToCollection}
-                removeMovieFromCollection={removeMovieFromCollection}
-                myMovieIds={myMovieIds}
+            : this.state.searchResults ? <SearchResults
+              handleGoBack={handleGoBack}
+              movies={searchResults}
+              selectMovie={selectMovie}
+              genres={genres}
+            /> :
+              <Route
+                path="/movies" exact
+                render={(props) => <MovieList {...props}
+                  movies={movies}
+                  selectMovie={selectMovie}
+                  genres={genres}
+                  getMoreMovies={getMoreMovies}
+                />}
               />
-            ) : this.state.searchResults ? <SearchResults
-                handleGoBack={handleGoBack}
-                movies={searchResults}
-                selectMovie={selectMovie}
-                genres={genres}
-              /> : 
-              <MovieList
-                movies={movies}
-                selectMovie={selectMovie}
-                genres={genres}
-                getMoreMovies={getMoreMovies}
-              />
-            }
-          </div>
-        )}
+            // <MovieList
+            //   movies={movies}
+            //   selectMovie={selectMovie}
+            //   genres={genres}
+            //   getMoreMovies={getMoreMovies}
+            // />
+          }
+        </div>
+
       </div>
-    );
+    )
+
   }
+
 }
 
 export default App;

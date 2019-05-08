@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -17,16 +18,16 @@ class MovieList extends Component {
     const { movies, genres, selectMovie, getMoreMovies } = this.props
 
     return (
-        <div className="movies-container">
-          <InfiniteScroll
+      <div className="movies-container">
+        <InfiniteScroll
           dataLength={movies.length}
           next={getMoreMovies}
           hasMore={true}
           loader={<h4>Loading...</h4>}
-          >
-            {movies.map(movie => <MovieCard key={movie.id} movie={movie} selectMovie={selectMovie} genres={genres} />)}
-          </InfiniteScroll>
-        </div>
+        >
+          {movies.map(movie => <Link to={`/movies/${movie.title}`}><MovieCard key={movie.id} movie={movie} selectMovie={selectMovie} genres={genres} /></Link>)}
+        </InfiniteScroll>
+      </div>
     )
   }
 }

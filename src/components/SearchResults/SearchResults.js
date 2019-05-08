@@ -16,7 +16,7 @@ class SearchResults extends Component {
 
     return (
         <React.Fragment>
-        <input value='Go Back' onClick={handleGoBack} />
+        <button onClick={handleGoBack}>GO BACK</button>
         <div className="movies-container">
           { movies.length < 1 ? <h1 style={{color: 'white'}}> Nothing Found! Please try another search term</h1> :
             movies.map(movie => <MovieCard key={movie.id} movie={movie} selectMovie={selectMovie} genres={genres} />)
