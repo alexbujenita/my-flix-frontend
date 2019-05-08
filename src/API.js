@@ -4,6 +4,17 @@ class API {
     this.baseUrl = "http://localhost:" + this.portIp;
   }
 
+  // LOGIN
+  static login(credentials) {
+    return fetch(this.baseUrl + '/auth/create', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials)
+    })
+      .then(resp => resp.json())
+  }
+  //
+
   static getMovies(page) {
     return fetch(this.baseUrl + "/movies", {
       method: "POST",

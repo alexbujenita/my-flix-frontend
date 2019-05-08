@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 
+import LandingPage from './components/LandingPage/LandingPage';
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
 import MovieInfo from "./components/MovieInfo/MovieInfo";
@@ -11,6 +12,7 @@ import SearchResults from "./components/SearchResults/SearchResults";
 
 class App extends React.Component {
   state = {
+    loggedIn: false,
     movies: [],
     myMovieIds: [],
     myMovies: [],
@@ -103,6 +105,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getMovies(this.state.page);
+    const token = localStorage.getItem("token")
+    if(token) {
+      this.setState({ loggedIn: true })
+    }
   }
 
   addMovieToCollection = movieId => {
@@ -143,6 +149,23 @@ class App extends React.Component {
   deselectMovie = () => {
     this.setState({ selectedMovie: null });
   };
+
+  // LOGIN
+  loginUser = (credentials) => {
+    API.login(credentials)
+      .then(authData => {
+        if(authData.error) {
+          console.log("Wrong username or password")
+        } else {
+          localStorage.setItem("token", authData.jwt);
+          this.setState({ loggedIn: true })
+        }
+      })
+  }
+  //
+
+
+
   // SEARCH
   setSearchTerm = searchTerm => {
     this.setState({ searchTerm });
@@ -166,8 +189,8 @@ class App extends React.Component {
       searchTerm: "",
       adult: false,
       searchResults: null
-    })
-  }
+    });
+  };
 
   //
 
@@ -184,6 +207,7 @@ class App extends React.Component {
       searchResults
     } = this.state;
     const {
+      loginUser,
       selectMovie,
       deselectMovie,
       getMoreMovies,
@@ -196,44 +220,52 @@ class App extends React.Component {
     } = this;
 
     return (
+      <React.Fragment>
+    {!this.state.loggedIn ?
+      <LandingPage loginUser={loginUser} />
+      :
       <div className="main-container">
         <div className="sidebar-container">
           <SideBar movies={movies} />
         </div>
-          <div className="navbar-movie-container">
-            <SearchBar
-              setSearchTerm={setSearchTerm}
-              inputValue={searchTerm}
-              handleSearch={handleSearch}
-              adult={adult}
-              setAdult={setAdult}
+        <div className="navbar-movie-container">
+          <SearchBar
+            setSearchTerm={setSearchTerm}
+            inputValue={searchTerm}
+            handleSearch={handleSearch}
+            adult={adult}
+            setAdult={setAdult}
+          />
+          {this.state.selectedMovie ? (
+            <MovieInfo
+              movie={selectedMovie}
+              deselectMovie={deselectMovie}
+              cast={movieCast}
+              trailer={movieTrailer}
+              addMovieToCollection={addMovieToCollection}
+              removeMovieFromCollection={removeMovieFromCollection}
+              myMovieIds={myMovieIds}
             />
-            {this.state.selectedMovie ? (
-              <MovieInfo
-                movie={selectedMovie}
-                deselectMovie={deselectMovie}
-                cast={movieCast}
-                trailer={movieTrailer}
-                addMovieToCollection={addMovieToCollection}
-                removeMovieFromCollection={removeMovieFromCollection}
-                myMovieIds={myMovieIds}
-              />
-            ) : this.state.searchResults ? <SearchResults
-                handleGoBack={handleGoBack}
-                movies={searchResults}
-                selectMovie={selectMovie}
-                genres={genres}
-              /> : 
-              <MovieList
-                movies={movies}
-                selectMovie={selectMovie}
-                genres={genres}
-                getMoreMovies={getMoreMovies}
-              />
-            }
-          </div>
+          ) : this.state.searchResults ? (
+            <SearchResults
+              handleGoBack={handleGoBack}
+              movies={searchResults}
+              selectMovie={selectMovie}
+              genres={genres}
+            />
+          ) : (
+            <MovieList
+              movies={movies}
+              selectMovie={selectMovie}
+              genres={genres}
+              getMoreMovies={getMoreMovies}
+            />
+          )}
+        </div>
         )}
       </div>
+      }
+      </React.Fragment>
     );
   }
 }
