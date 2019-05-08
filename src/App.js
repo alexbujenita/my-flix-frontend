@@ -13,6 +13,8 @@ import SearchResults from "./components/SearchResults/SearchResults";
 class App extends React.Component {
   state = {
     loggedIn: false,
+    userId: null,
+    userName: null,
     movies: [],
     myMovieIds: [],
     myMovies: [],
@@ -107,7 +109,14 @@ class App extends React.Component {
     this.getMovies(this.state.page);
     const token = localStorage.getItem("token")
     if(token) {
-      this.setState({ loggedIn: true })
+      API.getCurrentUser(token)
+        .then(user => {
+          this.setState({
+             loggedIn: true,
+             userId: user.user_id,
+             userName: user.name
+            })
+        })
     }
   }
 
@@ -158,10 +167,32 @@ class App extends React.Component {
           console.log("Wrong username or password")
         } else {
           localStorage.setItem("token", authData.jwt);
-          this.setState({ loggedIn: true })
+          this.setState({ loggedIn: true, userId: authData.user_id, userName: authData.name })
         }
       })
   }
+  //
+
+  // USER FAVORITE
+  userFavorites = () => {
+    const token = localStorage.getItem("token")
+    API.getUserMovies(token)
+      .then(movies => this.setState({ movies }))
+
+  }
+
+  //
+
+  // LOGOUT
+  handleLogOut = () => {
+    localStorage.clear('token');
+    this.setState({
+      loggedIn: false,
+      userId: null,
+      userName: null
+    })
+  }
+
   //
 
 
@@ -226,7 +257,7 @@ class App extends React.Component {
       :
       <div className="main-container">
         <div className="sidebar-container">
-          <SideBar movies={movies} />
+          <SideBar userFavorites={this.userFavorites} handleLogOut={this.handleLogOut} movies={movies} />
         </div>
         <div className="navbar-movie-container">
           <SearchBar

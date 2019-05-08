@@ -13,7 +13,32 @@ class API {
     })
       .then(resp => resp.json())
   }
+  // LOGIN - GET CURRENT USER
+  static getCurrentUser(token) {
+    return fetch(this.baseUrl + '/auth/show', {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(resp => resp.json())
+  }
+
+  
   //
+  // GET USER FAVORITES
+  static getUserMovies(token) {
+    return fetch(this.baseUrl + '/favorites', {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(resp => resp.json())
+  }
+  // 
 
   static getMovies(page) {
     return fetch(this.baseUrl + "/movies", {

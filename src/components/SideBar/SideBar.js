@@ -8,7 +8,8 @@ class SideBar extends Component {
         return (
             <div className="sidebar">
                 <button>MOVIES</button>
-                <button>COLLECTION</button>
+                <button onClick={this.props.userFavorites}>COLLECTION</button>
+                <button onClick={this.props.handleLogOut}>Log Out</button>
                 <h3 className="logo">MyFliX</h3>
             </div>
         )
