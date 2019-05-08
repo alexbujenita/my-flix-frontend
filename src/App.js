@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
+import LandingPage from './components/LandingPage/LandingPage';
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
 import MovieInfo from "./components/MovieInfo/MovieInfo";
@@ -12,6 +13,9 @@ import SearchResults from "./components/SearchResults/SearchResults";
 
 class App extends React.Component {
   state = {
+    loggedIn: false,
+    userId: null,
+    userName: null,
     movies: [],
     myMovieIds: [],
     myMovies: [],
@@ -104,6 +108,17 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getMovies(this.state.page);
+    const token = localStorage.getItem("token")
+    if(token) {
+      API.getCurrentUser(token)
+        .then(user => {
+          this.setState({
+             loggedIn: true,
+             userId: user.user_id,
+             userName: user.name
+            })
+        })
+    }
   }
 
   addMovieToCollection = movieId => {
@@ -144,6 +159,45 @@ class App extends React.Component {
   deselectMovie = () => {
     this.setState({ selectedMovie: null });
   };
+
+  // LOGIN
+  loginUser = (credentials) => {
+    API.login(credentials)
+      .then(authData => {
+        if(authData.error) {
+          console.log("Wrong username or password")
+        } else {
+          localStorage.setItem("token", authData.jwt);
+          this.setState({ loggedIn: true, userId: authData.user_id, userName: authData.name })
+        }
+      })
+  }
+  //
+
+  // USER FAVORITE
+  userFavorites = () => {
+    const token = localStorage.getItem("token")
+    API.getUserMovies(token)
+      .then(movies => this.setState({ movies }))
+
+  }
+
+  //
+
+  // LOGOUT
+  handleLogOut = () => {
+    localStorage.clear('token');
+    this.setState({
+      loggedIn: false,
+      userId: null,
+      userName: null
+    })
+  }
+
+  //
+
+
+
   // SEARCH
   setSearchTerm = searchTerm => {
     this.setState({ searchTerm });
@@ -167,8 +221,8 @@ class App extends React.Component {
       searchTerm: "",
       adult: false,
       searchResults: null
-    })
-  }
+    });
+  };
 
   render() {
     const {
@@ -183,6 +237,7 @@ class App extends React.Component {
       searchResults
     } = this.state;
     const {
+      loginUser,
       selectMovie,
       deselectMovie,
       getMoreMovies,
@@ -195,22 +250,24 @@ class App extends React.Component {
     } = this;
 
     return (
+      <React.Fragment>
+    {!this.state.loggedIn ?
+      <LandingPage loginUser={loginUser} />
+      :
       <div className="main-container">
 
         <div className="sidebar-container">
-          <SideBar movies={movies} />
+          <SideBar userFavorites={this.userFavorites} handleLogOut={this.handleLogOut} movies={movies} />
         </div>
-
         <div className="navbar-movie-container">
-          {this.state.selectedMovie ? null : <SearchBar
+          <SearchBar
             setSearchTerm={setSearchTerm}
             inputValue={searchTerm}
             handleSearch={handleSearch}
             adult={adult}
             setAdult={setAdult}
-          />}
-
-          {this.state.selectedMovie ?
+          />
+          {this.state.selectedMovie ? (
             <MovieInfo
               movie={selectedMovie}
               deselectMovie={deselectMovie}
@@ -219,46 +276,28 @@ class App extends React.Component {
               addMovieToCollection={addMovieToCollection}
               removeMovieFromCollection={removeMovieFromCollection}
               myMovieIds={myMovieIds}
-              {...this.props}
             />
-            : this.state.searchResults ?
-              // <Route
-              //   path="/movies/search" exact
-              //   render={(props) => <SearchResults {...props}
-              //     handleGoBack={handleGoBack}
-              //     movies={searchResults}
-              //     selectMovie={selectMovie}
-              //     genres={genres}
-              //   />}
-              // />
-              <SearchResults
-                handleGoBack={handleGoBack}
-                movies={searchResults}
-                selectMovie={selectMovie}
-                genres={genres}
-              /> 
-              :
-              <Route
-                path="/movies" exact
-                render={(props) => <MovieList {...props}
-                  movies={movies}
-                  selectMovie={selectMovie}
-                  genres={genres}
-                  getMoreMovies={getMoreMovies}
-                />}
-              />
-            // <MovieList
-            //   movies={movies}
-            //   selectMovie={selectMovie}
-            //   genres={genres}
-            //   getMoreMovies={getMoreMovies}
-            // />
-          }
+          ) : this.state.searchResults ? (
+            <SearchResults
+              handleGoBack={handleGoBack}
+              movies={searchResults}
+              selectMovie={selectMovie}
+              genres={genres}
+            />
+          ) : (
+            <MovieList
+              movies={movies}
+              selectMovie={selectMovie}
+              genres={genres}
+              getMoreMovies={getMoreMovies}
+            />
+          )}
         </div>
-
+        )}
       </div>
-    )
-
+      }
+      </React.Fragment>
+    );
   }
 
 }
