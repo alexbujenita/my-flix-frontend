@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
@@ -219,13 +219,25 @@ class App extends React.Component {
               addMovieToCollection={addMovieToCollection}
               removeMovieFromCollection={removeMovieFromCollection}
               myMovieIds={myMovieIds}
+              {...this.props}
             />
-            : this.state.searchResults ? <SearchResults
-              handleGoBack={handleGoBack}
-              movies={searchResults}
-              selectMovie={selectMovie}
-              genres={genres}
-            /> :
+            : this.state.searchResults ?
+              // <Route
+              //   path="/movies/search" exact
+              //   render={(props) => <SearchResults {...props}
+              //     handleGoBack={handleGoBack}
+              //     movies={searchResults}
+              //     selectMovie={selectMovie}
+              //     genres={genres}
+              //   />}
+              // />
+              <SearchResults
+                handleGoBack={handleGoBack}
+                movies={searchResults}
+                selectMovie={selectMovie}
+                genres={genres}
+              /> 
+              :
               <Route
                 path="/movies" exact
                 render={(props) => <MovieList {...props}
@@ -251,4 +263,10 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default withRouter(App);
+
+
+// <Switch>
+//   <Route path="/movies" />
+//   <Route path="/collection" />
+// </Switch>

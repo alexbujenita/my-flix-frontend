@@ -7,11 +7,13 @@ class MovieCard extends Component {
 
     render() {
 
-        const {movie, selectMovie, genres} = this.props
+        const {movie, genres} = this.props
         const {poster_path, title, release_date, genre_ids, overview} = movie
 
         return (
-            <div className = "movie-card" onClick={(event)=>selectMovie(movie)}>
+            <div className = "movie-card" 
+            // onClick={(event)=>selectMovie(movie)}
+            >
             <div className='card'>
                 <div className='poster'>
                     <img className="card-image" src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt='../../../public/images/poster_small.jpg' />
