@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
+import API from "../../API";
 import "./LogIn.css";
 
 class LogIn extends Component {
@@ -6,7 +8,19 @@ class LogIn extends Component {
     email: "",
     password: ""
   };
-
+  // LOGIN
+  loginUser = (credentials) => {
+    API.login(credentials)
+      .then(authData => {
+        if(authData.error) {
+          console.log("Wrong username or password")
+        } else {
+          localStorage.setItem("token", authData.jwt);
+          this.setState({ loggedIn: true, userId: authData.user_id, userName: authData.name })
+          this.props.history.push("/movies");
+        }
+      })
+}
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
@@ -15,16 +29,16 @@ class LogIn extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.loginUser(this.state)    
+    this.loginUser(this.state)    
   }
 
   render() {
     return (
-      <div>
+      <div className="login-form">
         <form className="login-text" onSubmit={this.handleSubmit}>
-          <h5>Log In</h5>
+          <h5 className="login-title">Log In</h5>
           <div className="input-field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email: </label>
             <input
               type="email"
               id="email"
@@ -33,7 +47,7 @@ class LogIn extends Component {
             />
           </div>
           <div className="input-field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password: </label>
             <input
               type="password"
               id="password"
@@ -41,7 +55,7 @@ class LogIn extends Component {
               onChange={this.handleChange}
             />
             <div className="input-field">
-              <button>Login</button>
+              <button type="submit">Login</button>
             </div>
           </div>
         </form>
@@ -50,4 +64,4 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn;
+export default withRouter(LogIn);

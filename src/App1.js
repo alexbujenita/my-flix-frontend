@@ -5,6 +5,8 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
 import MovieInfo from "./components/MovieInfo/MovieInfo";
+import LandingPage from "./components/LandingPage/LandingPage";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 import API from "./API";
 // import SearchBar from "./components/SearchBar/SearchBar";
@@ -18,9 +20,6 @@ class App1 extends React.Component {
         adult: false,
         searchResults: null,
     };
-
-    componentDidMount() {
-    }
 
     addMovieToCollection = movieId => {
         this.setState({ myMovieIds: [...this.state.myMovieIds, movieId] });
@@ -59,16 +58,15 @@ class App1 extends React.Component {
     }
 
     render() {
-
         return (
             <div className="main-container">
                 <SideBar/>
                 <Switch>
-                    <Route path="/movies" exact component={MovieList}/>
-                    <Route path="/collection" exact/>
-                    <Route path="/movies/:id" component={MovieInfo}/>
+                    <Route path="/" exact component={LandingPage}/>
+                    <PrivateRoute path="/movies" exact component={MovieList} />
+                    <PrivateRoute path="/collection" exact/>
+                    <PrivateRoute path="/movies/:id" component={MovieInfo}/>
                 </Switch>
-
             </div>
         )
 
