@@ -50,6 +50,11 @@ function MovieInfo({ match }) {
         }
     }
 
+    const addMovieToCollection = () => {
+        const token = localStorage.getItem('token')
+        API.addMovieToCollection(movie, token)
+    }
+
     return (
         <div className="show-movie">
             <div className="show-movie-details">
@@ -64,12 +69,9 @@ function MovieInfo({ match }) {
                     <br />
                     <a href={`https://www.imdb.com/title/${imdb_id}`} target="_blank" rel="noopener noreferrer">www.IMDB.com</a>
                     <div>
-                        {/* <button className="back-button" onClick={() => this.props.history.goBack()}>BACK</button> */}
-                        {/* {myMovieIds.includes(id) ?
-                <button className="remove-button" onClick={() => removeMovieFromCollection(id)}>REMOVE FROM COLLECTION</button>
-                :
-                <button className="add-button" onClick={() => addMovieToCollection(id)}>ADD TO COLLECTION</button>
-            } */}
+                        
+                    <button className="add-button" onClick={addMovieToCollection} >ADD TO COLLECTION</button>
+            
                     </div>
                     <YouTube
                         videoId={trailer ? trailer.key : '3cYBfuphkuE'}

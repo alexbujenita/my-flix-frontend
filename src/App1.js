@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import API from "./API";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
+import Collection from "./components/Collection/Collection"
 // import SearchBar from "./components/SearchBar/SearchBar";
 
 class App1 extends React.Component {
@@ -72,7 +73,7 @@ class App1 extends React.Component {
                     <Route path="/search" exact render={(routeProps) => (
                         <SearchResults {...routeProps} movies={this.state.searchResults} />
                     ) } />
-                    <PrivateRoute path="/collection" exact/>
+                    <PrivateRoute path="/collection" exact component={Collection} />
                     <PrivateRoute path="/movies/:id" component={MovieInfo}/>
                 </Switch>
                 </div>

@@ -1,25 +1,24 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
-import API from "../../API";
-import "./LogIn.css";
+import API from "../API";
+import "./Signup.css";
 
-class LogIn extends Component {
+class Signup extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    name: ''
   };
-  // LOGIN
-  loginUser = (credentials) => {
-    API.login(credentials)
+  // SIGN UP
+  signupUser = (state) => {
+    API.createUser(this.state)
       .then(authData => {
-        if(authData.error) {
-          console.log("Wrong username or password")
-        } else {
-          localStorage.setItem("token", authData.jwt);
-          this.props.history.push("/movies");
-        }
+        localStorage.setItem("token", authData.jwt);
+        this.props.history.push("/movies");
       })
-}
+  }
+
+
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
@@ -28,14 +27,23 @@ class LogIn extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.loginUser(this.state)    
+    this.signupUser(this.state)    
   }
 
   render() {
     return (
       <div className="login-form">
         <form className="login-text" onSubmit={this.handleSubmit}>
-          <h5 className="login-title">Log In</h5>
+          <h5 className="login-title">Sign Up</h5>
+          <div className="input-field">
+            <label htmlFor="name">Name: </label>
+            <input
+              type="name"
+              id="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+          </div>
           <div className="input-field">
             <label htmlFor="email">Email: </label>
             <input
@@ -54,7 +62,7 @@ class LogIn extends Component {
               onChange={this.handleChange}
             />
             <div className="input-field">
-              <button type="submit">Login</button>
+              <button type="submit">Create account</button>
             </div>
           </div>
         </form>
@@ -63,4 +71,4 @@ class LogIn extends Component {
   }
 }
 
-export default withRouter(LogIn);
+export default withRouter(Signup);

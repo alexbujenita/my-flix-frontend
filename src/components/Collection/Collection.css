@@ -1,0 +1,10 @@
+.movies-container {
+  display: flex;
+  grid-template-columns: auto;
+  flex-wrap: wrap;
+  /* background: url(http://eskipaper.com/images/blue-space-pictures-1.jpg) repeat; */
+}
+
+h4 {
+  color: white;
+}
