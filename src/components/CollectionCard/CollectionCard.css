@@ -58,7 +58,7 @@ body {
   transform: translateY(-30px);
 }
 
-.details{
+.col-details{
   position: absolute;
   text-align: center;
   padding: 20px;
@@ -70,19 +70,16 @@ body {
   transition: 0.5s;
   z-index: 2;
 }
-
-.card:hover .details {
+.card:hover .col-details {
   bottom: 0;
 }
-
-.details h2 {
+.col-details h2 {
   color: #fff;
   margin: 0;
   padding: 0;
   font-size: 20px;
 }
-
-.details h2 span {
+.col-details h2 span {
   font-size: 14px;
   color: #ff9800;
 }

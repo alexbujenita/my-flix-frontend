@@ -13,7 +13,7 @@ class LogIn extends Component {
     API.login(credentials)
       .then(authData => {
         if(authData.error) {
-          console.log("Wrong username or password")
+          alert("Wrong username or password")
         } else {
           localStorage.setItem("token", authData.jwt);
           this.props.history.push("/movies");

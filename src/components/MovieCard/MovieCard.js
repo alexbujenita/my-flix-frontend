@@ -3,14 +3,23 @@ import './MovieCard.css'
 
 
 class MovieCard extends Component {
-
+    
+    belongsToUser = (movie) => {
+        const { userMovies } = this.props
+        console.log("USER: " + userMovies[0].movie_ref_id);
+        console.log(movie.id);
+        const userMoviesIds = userMovies.map(m => m.movie_ref_id)
+        console.log("IDS:" + userMoviesIds);
+        
+        // return userMovies.forEach(m => m.movie_ref_id.includes(movie.id) )
+        
+    }
 
     render() {
 
         const {movie, genres} = this.props
         const {poster_path, title, release_date, genre_ids, overview} = movie
-        // console.log(movie);
-        
+        // this.belongsToUser(movie)
         return (
             <div className = "movie-card" 
             // onClick={(event)=>selectMovie(movie)}

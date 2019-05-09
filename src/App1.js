@@ -17,11 +17,17 @@ import Collection from "./components/Collection/Collection"
 class App1 extends React.Component {
     state = {
         myMovieIds: [],
+        userMovies: [],
         myMovies: [],
         searchTerm: "",
         adult: false,
         searchResults: null,
     };
+
+    componentDidMount() {
+        API.getUserMovies(localStorage.getItem('token'))
+        .then(userMovies => this.setState({ userMovies }))
+    }
 
     addMovieToCollection = movieId => {
         this.setState({ myMovieIds: [...this.state.myMovieIds, movieId] });
@@ -65,7 +71,7 @@ class App1 extends React.Component {
         return (
             <div className="main-container">
                 <SideBar/>
-                <div>
+                <div className="show-container">
                 { localStorage.getItem('token') && <SearchBar setSearchTerm={this.setSearchTerm} handleSearch={this.handleSearch}  searchTerm={this.state.searchTerm} />}
                 <Switch>
                     <Route path="/" exact component={LandingPage}/>
@@ -73,8 +79,10 @@ class App1 extends React.Component {
                     <Route path="/search" exact render={(routeProps) => (
                         <SearchResults {...routeProps} movies={this.state.searchResults} />
                     ) } />
-                    <PrivateRoute path="/collection" exact component={Collection} />
-                    <PrivateRoute path="/movies/:id" component={MovieInfo}/>
+                    <PrivateRoute path="/collection" exact component={Collection} attr={{ name: 'Col'}} />
+                    <Route path="/movies/:id" render={(routeProps) => (
+                        <MovieInfo {...routeProps} userMovies={this.state.userMovies} />
+                    ) } />
                 </Switch>
                 </div>
             </div>

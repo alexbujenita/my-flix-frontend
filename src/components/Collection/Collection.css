@@ -1,4 +1,4 @@
-.movies-container {
+.col-container {
   display: flex;
   grid-template-columns: auto;
   flex-wrap: wrap;

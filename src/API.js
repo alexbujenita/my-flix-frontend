@@ -51,6 +51,17 @@ class API {
 }
  //
 
+ // REMOVE FAVORITE
+  static removeMovieFromCollection = (movie, token) => {
+    return fetch(this.baseUrl + '/favorites', {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", Authorization: token },
+      body: JSON.stringify({ movie_id: movie.id })
+    })
+      .then(resp => resp.json())
+  }
+ //
+
  // CREATE USER
  static createUser = (user) => {
    return fetch(this.baseUrl + '/users/create', {

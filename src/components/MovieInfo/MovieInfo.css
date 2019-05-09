@@ -4,37 +4,30 @@
     grid-template-rows: 4fr 6fr;
     height: 100vh;
 }
-
 .show-movie-details {
     display: grid;
     grid-template-columns: 4fr 6fr;
 }
-
 .movie-details {
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
     color: white;
 }
-
 .info-card-image {
     margin-left: 10px;
     margin-top: 50px;
 }
-
 .movie-title {
     font-size: 25px;
 }
-
 .movie-cast {
     margin-right: 100px;
 }
-
 a, h2, h1 {
     color: white;
     text-decoration: none;
 }
-
 .back-button {
     margin-top: 10px;
     margin-left: 0px;
@@ -44,12 +37,10 @@ a, h2, h1 {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .back-button:hover {
     background-color: lightblue;
     color: black;
 }
-
 .add-button, .remove-button {
     margin-left: 10px;
     background-color: orange;    
@@ -58,16 +49,11 @@ a, h2, h1 {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .add-button:hover {
     background-color: green;
     color: white;
 }
-
 .remove-button:hover {
     background-color: red;
     color: white;
 }
-
-
-

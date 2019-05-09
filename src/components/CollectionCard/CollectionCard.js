@@ -19,7 +19,7 @@ class CollectionCard extends Component {
                 <div className='poster'>
                     <img className="card-image" src= {movie_poster_path ? `https://image.tmdb.org/t/p/w500${movie_poster_path}` : 'https://d994l96tlvogv.cloudfront.net/uploads/film/poster/poster-image-coming-soon-placeholder-all-logos-500-x-740_17928.png'} alt='poster' />
                 </div>
-                <div className='details'>
+                <div className='col-details'>
                     <h2>{movie_title}</h2>
                 </div>
             </div>

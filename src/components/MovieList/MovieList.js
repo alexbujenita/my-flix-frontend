@@ -12,6 +12,7 @@ class MovieList extends Component {
 
   state = {
     movies: [],
+    userMovies: [],
     page: 1,
     genres: [
       {
@@ -123,7 +124,7 @@ class MovieList extends Component {
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
-          {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.id}`}><MovieCard movie={movie} selectMovie={selectMovie} genres={genres} /></Link>)}
+          {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.id}`}><MovieCard movie={movie} userMovies={this.state.userMovies} selectMovie={selectMovie} genres={genres} /></Link>)}
         </InfiniteScroll>
       </div>
     )

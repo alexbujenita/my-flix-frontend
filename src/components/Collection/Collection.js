@@ -115,7 +115,7 @@ class Collection extends Component {
     const { getMoreMovies, selectMovie } = this
 
     return (
-      <div className="movies-container">
+      <div className="col-container">
           {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.movie_ref_id}`}><CollectionCard movie={movie} selectMovie={selectMovie} genres={genres} /></Link>)}
       </div>
     )
