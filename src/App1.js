@@ -9,6 +9,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 import API from "./API";
+import SearchBar from "./components/SearchBar/SearchBar";
+import SearchResults from "./components/SearchResults/SearchResults";
 // import SearchBar from "./components/SearchBar/SearchBar";
 // import SearchResults from "./components/SearchResults/SearchResults";
 
@@ -47,6 +49,7 @@ class App1 extends React.Component {
         API.searchMovie(this.state.searchTerm, this.state.adult).then(movies =>
             this.setState({ searchResults: movies })
         );
+        // history.pushState('/search')
     };
 
     handleGoBack = () => {
@@ -56,14 +59,17 @@ class App1 extends React.Component {
             searchResults: null
         })
     }
+    
 
     render() {
         return (
             <div className="main-container">
                 <SideBar/>
+                <SearchBar setSearchTerm={this.setSearchTerm} handleSearch={this.handleSearch}  searchTerm={this.state.searchTerm} />
                 <Switch>
                     <Route path="/" exact component={LandingPage}/>
                     <PrivateRoute path="/movies" exact component={MovieList} />
+                    <PrivateRoute path="/search" exact component={SearchResults} />
                     <PrivateRoute path="/collection" exact/>
                     <PrivateRoute path="/movies/:id" component={MovieInfo}/>
                 </Switch>
