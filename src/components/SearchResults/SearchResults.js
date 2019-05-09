@@ -95,10 +95,7 @@ class SearchResults extends Component {
   }
 
   render() {
-    console.log(this.props.movies);
-    
     const { movies } = this.props
-    console.log(this.props);
     
     return (
         <React.Fragment>
