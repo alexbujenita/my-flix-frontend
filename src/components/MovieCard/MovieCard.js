@@ -9,7 +9,8 @@ class MovieCard extends Component {
 
         const {movie, genres} = this.props
         const {poster_path, title, release_date, genre_ids, overview} = movie
-
+        // console.log(movie);
+        
         return (
             <div className = "movie-card" 
             // onClick={(event)=>selectMovie(movie)}

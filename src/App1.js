@@ -12,7 +12,6 @@ import API from "./API";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 // import SearchBar from "./components/SearchBar/SearchBar";
-// import SearchResults from "./components/SearchResults/SearchResults";
 
 class App1 extends React.Component {
     state = {
@@ -47,9 +46,8 @@ class App1 extends React.Component {
     handleSearch = event => {
         event.preventDefault();
         API.searchMovie(this.state.searchTerm, this.state.adult).then(movies =>
-            this.setState({ searchResults: movies })
+            this.setState({ searchResults: movies }, () => this.props.history.push('/search'))
         );
-        // history.pushState('/search')
     };
 
     handleGoBack = () => {
@@ -62,17 +60,22 @@ class App1 extends React.Component {
     
 
     render() {
+        
         return (
             <div className="main-container">
                 <SideBar/>
-                <SearchBar setSearchTerm={this.setSearchTerm} handleSearch={this.handleSearch}  searchTerm={this.state.searchTerm} />
+                <div>
+                { localStorage.getItem('token') && <SearchBar setSearchTerm={this.setSearchTerm} handleSearch={this.handleSearch}  searchTerm={this.state.searchTerm} />}
                 <Switch>
                     <Route path="/" exact component={LandingPage}/>
                     <PrivateRoute path="/movies" exact component={MovieList} />
-                    <PrivateRoute path="/search" exact component={SearchResults} />
+                    <Route path="/search" exact render={(routeProps) => (
+                        <SearchResults {...routeProps} movies={this.state.searchResults} />
+                    ) } />
                     <PrivateRoute path="/collection" exact/>
                     <PrivateRoute path="/movies/:id" component={MovieInfo}/>
                 </Switch>
+                </div>
             </div>
         )
 

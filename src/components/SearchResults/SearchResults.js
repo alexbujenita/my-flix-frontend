@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MovieCard from '../MovieCard/MovieCard'
+import { Link } from 'react-router-dom'
 
 import './SearchResults.css'
 
@@ -7,6 +8,7 @@ class SearchResults extends Component {
 
   state = {
     movies: [],
+    page: 1,
     genres: [
       {
         id: 28,
@@ -88,21 +90,21 @@ class SearchResults extends Component {
   
   }
 
-
   componentDidMount() {
     window.scrollTo(0, 0)
   }
 
   render() {
-
-    const { movies, genres, selectMovie, handleGoBack } = this.props
-
+    console.log(this.props.movies);
+    
+    const { movies } = this.props
+    console.log(this.props);
+    
     return (
         <React.Fragment>
-        <button onClick={handleGoBack}>GO BACK</button>
         <div className="movies-container">
           { movies.length < 1 ? <h1 style={{color: 'white'}}> Nothing Found! Please try another search term</h1> :
-            movies.map(movie => <MovieCard key={movie.id} movie={movie} selectMovie={selectMovie} genres={genres} />)
+            movies.map(movie => <Link to={`/movies/${movie.id}`} key={movie.id}><MovieCard  movie={movie}  genres={this.state.genres} /></Link>)
             }
         </div>
         </React.Fragment>
