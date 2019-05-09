@@ -112,7 +112,7 @@ class Collection extends Component {
   render() {
 
     const { movies, genres } = this.state
-    const { getMoreMovies, selectMovie } = this
+    const { selectMovie } = this
 
     return (
       <div className="col-container">
