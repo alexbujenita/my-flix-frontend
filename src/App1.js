@@ -81,6 +81,7 @@ class App1 extends React.Component {
               setSearchTerm={this.setSearchTerm}
               handleSearch={this.handleSearch}
               searchTerm={this.state.searchTerm}
+              setAdult={this.setAdult}
             />
           )}
           <Switch>
