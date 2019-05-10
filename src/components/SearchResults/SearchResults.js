@@ -95,7 +95,7 @@ class SearchResults extends Component {
   }
 
   render() {
-    const { movies, searchPage } = this.props
+    const { movies } = this.props
     
     return (
         <React.Fragment>
@@ -104,10 +104,6 @@ class SearchResults extends Component {
             movies.map(movie => <Link to={`/movies/${movie.id}`} key={movie.id}><MovieCard  movie={movie}  genres={this.state.genres} /></Link>)
             }
         </div>
-        {/* <div>
-            <button>NEXT</button>
-            <button>PREV</button>
-        </div> */}
         </React.Fragment>
     )
   }

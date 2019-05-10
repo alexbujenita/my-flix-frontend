@@ -11,9 +11,6 @@ class SearchBar extends Component {
       <div className='search-form'>
         <form onSubmit={handleSearch} >
           <div>
-            {/* <label>
-              Search for a movie title:
-            </label> */}
               <input type='text' placeholder="Search your Flick and chill.." className="search-input" required={true} onChange={e => setSearchTerm(e.target.value)} value={searchTerm} />
               <label className="search-adult">
               Include adult results?
