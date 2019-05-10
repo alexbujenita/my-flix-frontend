@@ -85,11 +85,14 @@ class MovieInfo extends Component {
     return movie ? (
       <div className="show-movie">
         <div className="show-movie-details">
-          <img
-            className="info-card-image"
-            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-            alt=""
-          />
+            <div className="img-movie">
+                <img
+                    className="info-card-image"
+                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                    alt=""
+                />
+            </div>
+         
           <div className="movie-details">
             <div className="movie-title">{original_title && original_title.toUpperCase()}</div>
             <p> {overview}</p>
@@ -127,12 +130,15 @@ class MovieInfo extends Component {
                 </button>
               )}
             </div>
+          </div>
+        </div>
+            <div>
             <YouTube
               videoId={trailer ? trailer.key : "3cYBfuphkuE"}
               opts={opts}
             />
-          </div>
-        </div>
+
+            </div>
         <h2>MOVIE CAST:</h2>
         <ul className="movie-cast">
           {cast && cast.map(actor => (

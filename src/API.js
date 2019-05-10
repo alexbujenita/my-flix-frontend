@@ -92,13 +92,14 @@ class API {
     }).then(resp => resp.json());
   };
 
-  static searchMovie = (searchTerm, adult) => {
+  static searchMovie = (searchTerm, adult, searchPage) => {
     return fetch(this.baseUrl + "/movies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         search_term: searchTerm,
-        adult
+        adult,
+        page: searchPage
       })
     })
       .then(resp => resp.json())

@@ -20,6 +20,7 @@ class App1 extends React.Component {
         userMovies: [],
         myMovies: [],
         searchTerm: "",
+        searchPage: 1,
         adult: false,
         searchResults: null,
     };
@@ -51,8 +52,9 @@ class App1 extends React.Component {
     };
 
     handleSearch = event => {
+        const { searchPage, adult, searchTerm } = this.state
         event.preventDefault();
-        API.searchMovie(this.state.searchTerm, this.state.adult).then(movies =>
+        API.searchMovie(searchTerm, adult, searchPage).then(movies =>
             this.setState({ searchResults: movies }, () => this.props.history.push('/search'))
         );
     };
@@ -72,12 +74,20 @@ class App1 extends React.Component {
             <div className="main-container">
                 <SideBar/>
                 <div className="show-container">
-                { localStorage.getItem('token') && <SearchBar setSearchTerm={this.setSearchTerm} handleSearch={this.handleSearch}  searchTerm={this.state.searchTerm} />}
+                { localStorage.getItem('token') && <SearchBar
+                 setSearchTerm={this.setSearchTerm}
+                 handleSearch={this.handleSearch}
+                 searchTerm={this.state.searchTerm}
+                  />}
                 <Switch>
                     <Route path="/" exact component={LandingPage}/>
                     <PrivateRoute path="/movies" exact component={MovieList} />
                     <Route path="/search" exact render={(routeProps) => (
-                        <SearchResults {...routeProps} movies={this.state.searchResults} />
+                        <SearchResults {...routeProps}
+                        searchPage={this.state.searchPage}
+                        movies={this.state.searchResults}
+                        handleSearch={this.handleSearch}
+                        />
                     ) } />
                     <PrivateRoute path="/collection" exact component={Collection} attr={{ name: 'Col'}} />
                     <Route path="/movies/:id" render={(routeProps) => (

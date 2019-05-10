@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 
 
 import './SideBar.css'
+import API from '../../API';
 
 
 class SideBar extends Component {
+
 
       // LOGOUT
   handleLogOut = () => {
@@ -24,6 +26,7 @@ class SideBar extends Component {
                 <button>COLLECTION</button>
                 </Link>
                 { localStorage.getItem("token") && <Link to='/' ><button onClick={this.handleLogOut}>LOG OUT</button></Link>   }
+                
                 <h3 className="logo">MyFliX</h3>
             </div>
         )
