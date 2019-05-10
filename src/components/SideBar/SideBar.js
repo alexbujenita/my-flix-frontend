@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 
 import './SideBar.css'
-import API from '../../API';
-
 
 class SideBar extends Component {
 
