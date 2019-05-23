@@ -2,5 +2,10 @@
   display: inline-flex;
   background-color: black;
   height: 100%;
+  width: 100%;
+}
+
+.show-container {
   margin-left: 160px;
+
 }

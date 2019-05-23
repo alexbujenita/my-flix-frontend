@@ -10,6 +10,11 @@
     padding-top: 20px;
 }
 
+#username {
+    color: red;
+    bottom: 50px;
+}
+
 .sidebar h3 {
     padding: 6px 8px 6px 16px; 
     position: absolute;

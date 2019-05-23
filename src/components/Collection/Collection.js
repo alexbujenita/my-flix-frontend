@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import './Collection.css'
 
-import './MovieList.css'
-
-import MovieCard from '../MovieCard/MovieCard'
 import API from '../../API';
+import CollectionCard from '../CollectionCard/CollectionCard';
 
-class MovieList extends Component {
+class Collection extends Component {
 
   state = {
     movies: [],
-    userMovies: [],
     page: 1,
     genres: [
       {
@@ -97,7 +94,8 @@ class MovieList extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0)
-    this.getMovies(this.state.page);
+    API.getUserMovies(localStorage.getItem('token'))
+      .then(movies => this.setState({ movies }))
   }
 
   getMovies = page => {
@@ -114,22 +112,15 @@ class MovieList extends Component {
   render() {
 
     const { movies, genres } = this.state
-    const { getMoreMovies, selectMovie } = this
+    const { selectMovie } = this
 
     return (
-      <div className="movies-container">
-        <InfiniteScroll
-          dataLength={movies.length}
-          next={getMoreMovies}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-        >
-          {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.id}`}><MovieCard movie={movie} userMovies={this.state.userMovies} selectMovie={selectMovie} genres={genres} /></Link>)}
-        </InfiniteScroll>
+      <div className="col-container">
+          {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.movie_ref_id}`}><CollectionCard movie={movie} selectMovie={selectMovie} genres={genres} /></Link>)}
       </div>
     )
   }
 }
 
 
-export default MovieList
+export default Collection
