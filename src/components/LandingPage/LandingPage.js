@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LogIn from '../LogIn/LogIn';
 import "./LandingPage.css";
 import Signup from '../../Signup/Signup';
 
-class LandingPage extends Component {
-  render() {
+const LandingPage = () => {
     const isLoggedIn = !!localStorage.getItem("token");
 
     return isLoggedIn ? 
@@ -22,6 +21,6 @@ class LandingPage extends Component {
       </div>
     )
   }
-}
+
 
 export default LandingPage

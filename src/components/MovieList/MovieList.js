@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import './MovieList.css'
+import "./MovieList.css";
 
-import MovieCard from '../MovieCard/MovieCard'
-import API from '../../API';
+import MovieCard from "../MovieCard/MovieCard";
+import API from "../../API";
 
 class MovieList extends Component {
-
   state = {
     movies: [],
     userMovies: [],
@@ -92,11 +91,10 @@ class MovieList extends Component {
         name: "Western"
       }
     ]
-  
-  }
+  };
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     this.getMovies(this.state.page);
   }
 
@@ -112,9 +110,8 @@ class MovieList extends Component {
   };
 
   render() {
-
-    const { movies, genres } = this.state
-    const { getMoreMovies, selectMovie } = this
+    const { movies, genres } = this.state;
+    const { getMoreMovies, selectMovie } = this;
 
     return (
       <div className="movies-container">
@@ -124,12 +121,20 @@ class MovieList extends Component {
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
-          {movies.map(movie => <Link key={movie.id} to={`/movies/${movie.id}`}><MovieCard movie={movie} userMovies={this.state.userMovies} selectMovie={selectMovie} genres={genres} /></Link>)}
+          {movies.map(movie => (
+            <Link key={movie.id} to={`/movie/${movie.id}`}>
+              <MovieCard
+                movie={movie}
+                userMovies={this.state.userMovies}
+                selectMovie={selectMovie}
+                genres={genres}
+              />
+            </Link>
+          ))}
         </InfiniteScroll>
       </div>
-    )
+    );
   }
 }
 
-
-export default MovieList
+export default MovieList;

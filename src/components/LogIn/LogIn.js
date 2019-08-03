@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import API from "../../API";
 import "./LogIn.css";
 
@@ -9,27 +9,27 @@ class LogIn extends Component {
     password: ""
   };
   // LOGIN
-  loginUser = (credentials) => {
-    API.login(credentials)
-      .then(authData => {
-        if(authData.error) {
-          alert("Wrong username or password")
-        } else {
-          localStorage.setItem("token", authData.jwt);
-          this.props.history.push("/movies");
-        }
-      })
-}
-  handleChange = (event) => {
+  loginUser = credentials => {
+    API.login(credentials).then(authData => {
+      if (authData.error) {
+        alert("Wrong username or password");
+      } else {
+        localStorage.setItem("token", authData.jwt);
+        this.props.history.push("/movies");
+      }
+    });
+  };
+  handleChange = event => {
+    const { id, value } = event.target;
     this.setState({
-      [event.target.id]: event.target.value
+      [id]: value
     });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
-    this.loginUser(this.state)    
-  }
+    this.loginUser(this.state);
+  };
 
   render() {
     return (

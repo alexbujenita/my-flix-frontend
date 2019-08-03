@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
 import { Route, Switch, withRouter } from "react-router-dom";
 
@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults/SearchResults";
 import Collection from "./components/Collection/Collection";
 // import SearchBar from "./components/SearchBar/SearchBar";
 
-class App1 extends React.Component {
+class App1 extends Component {
   state = {
     myMovieIds: [],
     userMovies: [],
@@ -105,7 +105,7 @@ class App1 extends React.Component {
               attr={{ name: "Col" }}
             />
             <Route
-              path="/movies/:id"
+              path="/movie/:id"
               render={routeProps => (
                 <MovieInfo {...routeProps} userMovies={this.state.userMovies} />
               )}

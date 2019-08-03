@@ -5,23 +5,32 @@ import "./Signup.css";
 
 class Signup extends Component {
   state = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     name: ''
   };
+
+  isValidPassword = pass => pass.length > 3;
+
   // SIGN UP
-  signupUser = (state) => {
-    API.createUser(this.state)
-      .then(authData => {
-        localStorage.setItem("token", authData.jwt);
-        this.props.history.push("/movies");
-      })
+  signupUser = () => {
+    if(this.isValidPassword(this.state.password)) {
+      API.createUser(this.state)
+        .then(authData => {
+          localStorage.setItem("token", authData.jwt);
+          this.props.history.push("/movies");
+        })
+    } else {
+      alert('Password must be at least 4 characters long!');
+      return;
+    }
   }
 
 
   handleChange = (event) => {
+    const { id, value } = event.target
     this.setState({
-      [event.target.id]: event.target.value
+      [id]: value
     });
   };
 
