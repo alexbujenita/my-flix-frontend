@@ -12,7 +12,6 @@ import API from "./API";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import Collection from "./components/Collection/Collection";
-// import SearchBar from "./components/SearchBar/SearchBar";
 
 class App1 extends Component {
   state = {
@@ -22,7 +21,7 @@ class App1 extends Component {
     searchTerm: "",
     searchPage: 1,
     adult: false,
-    searchResults: null
+    searchResults: []
   };
 
   componentDidMount() {
@@ -58,17 +57,9 @@ class App1 extends Component {
     API.searchMovie(searchTerm, adult, searchPage).then(movies =>
       this.setState(
         { searchResults: movies },
-        () => this.props.history.push("/search")
+        () => this.props.history.push(`/search/${searchTerm}/${searchPage}`)
       )
     );
-  };
-
-  handleGoBack = () => {
-    this.setState({
-      searchTerm: "",
-      adult: false,
-      searchResults: null
-    });
   };
 
   render() {
@@ -88,7 +79,7 @@ class App1 extends Component {
             <Route path="/" exact component={LandingPage} />
             <PrivateRoute path="/movies" exact component={MovieList} />
             <Route
-              path="/search"
+              path="/search/:search/:page"
               exact
               render={routeProps => (
                 <SearchResults
