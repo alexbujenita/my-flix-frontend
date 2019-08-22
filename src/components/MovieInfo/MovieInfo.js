@@ -14,7 +14,7 @@ class MovieInfo extends Component {
     genre: [],
     cast: []
   };
-  componentWillMount() {
+  componentDidMount() {
     const { match } = this.props;
     API.getUserMovies(localStorage.getItem("token")).then(result => {
       this.setState({ userMovies: result });

@@ -12,7 +12,7 @@ const ActorCard = ({ actor }) => {
               src={
                 profile_path
                   ? `https://image.tmdb.org/t/p/w500${profile_path}`
-                  : "https://propertymarketersllc.com/wp-content/uploads/2018/05/profile-picture-placeholder.png"
+                  : "https://cdn.diversityavatars.com/assets/images/avatars-gallery/placeholder.png"
               }
               alt="Actor profile"
             />
