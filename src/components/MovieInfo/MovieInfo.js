@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import YouTube from "react-youtube";
 import { withRouter } from "react-router-dom";
 
@@ -7,12 +7,13 @@ import "./MovieInfo.css";
 import ActorCard from "../ActorCard/ActorCard";
 import API from "../../API";
 
-class MovieInfo extends Component {
+class MovieInfo extends PureComponent {
   state = {
     userMovies: [],
     movie: {},
     genre: [],
-    cast: []
+    cast: [],
+    trailer: ''
   };
   componentDidMount() {
     const { match } = this.props;
@@ -26,11 +27,11 @@ class MovieInfo extends Component {
       });
     });
     API.getMovieCredits(match.params.id).then(cast => {
-      this.setState({ cast: cast });
+      this.setState({ cast });
     });
-    API.getMovieTrailers(match.params.id).then(async trailers => {
-      const trailer = await trailers.find(trail => trail.type === "Trailer");
-      this.setState({ trailer: trailer });
+    API.getMovieTrailers(match.params.id).then(trailers => {
+      const trailer = trailers.find(trail => trail.type === "Trailer");
+      this.setState({ trailer });
     });
     window.scrollTo(0, 0);
   }
@@ -104,7 +105,7 @@ class MovieInfo extends Component {
             <ul>
               GENRES:{" "}
               {genres &&
-                genres.map(genre => <li key={genre.id}> {genre.name}</li>)}
+                genres.map(genre => <li key={`$(genre.id)-${Math.ceil(Math.random()*9001)}`}> {genre.name}</li>)}
             </ul>
             <a href={homepage} target="_blank" rel="noopener noreferrer">
               MOVIE HOMEPAGE
@@ -145,7 +146,7 @@ class MovieInfo extends Component {
         <h2>MOVIE CAST:</h2>
         <ul className="movie-cast">
           {cast &&
-            cast.map(actor => <ActorCard key={actor.cast_id} actor={actor} />)}
+            cast.map(actor => <ActorCard key={`$(actor.cast_id)-${Math.ceil(Math.random()*9001)}`} actor={actor} />)}
         </ul>
       </div>
     ) : null;

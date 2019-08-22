@@ -5,7 +5,7 @@ import "./ActorCard.css";
 const ActorCard = ({ actor }) => {
     const { profile_path, name, character } = actor;
     return (
-      <div className="actor-card">
+      <div key={`$(name)-${Math.ceil(Math.random()*9001)}`} className="actor-card">
         <div className="actor-card-inner">
           <div className="actor-card-front">
             <img
