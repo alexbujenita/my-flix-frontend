@@ -23,6 +23,7 @@ class API {
     }).then(resp => resp.json());
   }
 
+
   //
   // GET USER FAVORITES
   static getUserMovies(token) {
@@ -33,6 +34,12 @@ class API {
         Authorization: token
       }
     }).then(resp => resp.json());
+  }
+  //
+
+  // GET RANDOM MOVIES
+  static getRandomMovies() {
+    return fetch(this.baseUrl + "/movies/random").then(resp => resp.json())
   }
   //
 
