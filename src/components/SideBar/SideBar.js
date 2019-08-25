@@ -17,6 +17,9 @@ const SideBar = () => {
       <Link to="/collection">
         <button>COLLECTION</button>
       </Link>
+      <Link to="/movies/random">
+        <button>RANDOM</button>
+      </Link>
       {localStorage.getItem("token") && (
         <Link to="/">
           <button onClick={handleLogOut}>LOG OUT</button>

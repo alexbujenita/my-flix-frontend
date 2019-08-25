@@ -12,6 +12,7 @@ import API from "./API";
 import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import Collection from "./components/Collection/Collection";
+import RandomMovies from "./components/RandomMovies/RandomMovies";
 
 class App1 extends Component {
   state = {
@@ -78,6 +79,7 @@ class App1 extends Component {
           <Switch>
             <Route path="/" exact component={LandingPage} />
             <PrivateRoute path="/movies" exact component={MovieList} />
+            <PrivateRoute path="/movies/random" exact component={RandomMovies} />
             <Route
               path="/search/:search/:page"
               exact

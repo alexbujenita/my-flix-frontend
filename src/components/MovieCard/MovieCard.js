@@ -26,7 +26,7 @@ class MovieCard extends Component {
             >
             <div className='card'>
                 <div className='poster'>
-                    <img className="card-image" src= {poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'https://d994l96tlvogv.cloudfront.net/uploads/film/poster/poster-image-coming-soon-placeholder-all-logos-500-x-740_17928.png'} alt='poster' />
+                    <img className="card-image" src= {poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'http://wearetheranch.com/wp-content/uploads/2016/01/poster-placeholder.jpg'} alt='poster' />
                 </div>
                 <div className='details'>
                     <h2>{title}</h2>
