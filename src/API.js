@@ -23,7 +23,6 @@ class API {
     }).then(resp => resp.json());
   }
 
-
   //
   // GET USER FAVORITES
   static getUserMovies(token) {
@@ -39,47 +38,50 @@ class API {
 
   // GET RANDOM MOVIES
   static getRandomMovies() {
-    return fetch(this.baseUrl + "/movies/random").then(resp => resp.json())
+    return fetch(this.baseUrl + "/movies/random").then(resp => resp.json());
+  }
+  //
+
+  // GET ALL MOVIES FOR AN ACTOR
+  static getActorMovies(actorId) {
+    return fetch(`${this.baseUrl}/actor/${actorId}`).then(resp => resp.json());
   }
   //
 
   // ADD FAVORITE
   static addMovieToCollection = (movie, token) => {
-    return fetch(this.baseUrl + '/favorites', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: token },
-        body: JSON.stringify({
-            movie_ref_id: movie.id,
-            movie_poster_path: movie.poster_path,
-            movie_title: movie.title
-        })
-    }
-    )
-}
- //
+    return fetch(this.baseUrl + "/favorites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: token },
+      body: JSON.stringify({
+        movie_ref_id: movie.id,
+        movie_poster_path: movie.poster_path,
+        movie_title: movie.title
+      })
+    });
+  };
+  //
 
- // REMOVE FAVORITE
+  // REMOVE FAVORITE
   static removeMovieFromCollection = (movie, token) => {
-    return fetch(this.baseUrl + '/favorites', {
+    return fetch(this.baseUrl + "/favorites", {
       method: "DELETE",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({ movie_id: movie.id })
-    })
-      .then(resp => resp.json())
-  }
- //
+    }).then(resp => resp.json());
+  };
+  //
 
- // CREATE USER
- static createUser = (user) => {
-   return fetch(this.baseUrl + '/users/create', {
-     method: "POST",
-     headers: { "Content-Type": "application/json" },
-     body: JSON.stringify(user)
-   })
-      .then(resp => resp.json())
- }
+  // CREATE USER
+  static createUser = user => {
+    return fetch(this.baseUrl + "/users/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    }).then(resp => resp.json());
+  };
 
- //
+  //
 
   static getMovies(page) {
     return fetch(this.baseUrl + "/movies", {
