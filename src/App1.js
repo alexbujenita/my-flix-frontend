@@ -13,6 +13,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import SearchResults from "./components/SearchResults/SearchResults";
 import Collection from "./components/Collection/Collection";
 import RandomMovies from "./components/RandomMovies/RandomMovies";
+import ActorMovies from "./components/ActorMovies/ActorMovies";
 
 class App1 extends Component {
   state = {
@@ -97,6 +98,7 @@ class App1 extends Component {
               component={Collection}
               attr={{ name: "Col" }}
             />
+            <Route path="/actor/:id" render={routeProps => <ActorMovies {...routeProps} />} />
             <Route
               path="/movie/:id"
               render={routeProps => (
