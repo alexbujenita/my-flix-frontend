@@ -9,8 +9,6 @@ class ActorMovies extends PureComponent {
     movies: []
   };
 
-  // TRY With 1772
-
   async componentDidMount() {
     const actorId = this.props.match.params.id;
     const movies = await API.getActorMovies(actorId);

@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import YouTube from "react-youtube";
-import { withRouter } from "react-router-dom";
 
 import "./MovieInfo.css";
 
@@ -13,7 +12,7 @@ class MovieInfo extends PureComponent {
     movie: {},
     genre: [],
     cast: [],
-    trailer: ''
+    trailer: ""
   };
   componentDidMount() {
     const { match } = this.props;
@@ -105,7 +104,12 @@ class MovieInfo extends PureComponent {
             <ul>
               GENRES:{" "}
               {genres &&
-                genres.map(genre => <li key={`$(genre.id)-${Math.ceil(Math.random()*9001)}`}> {genre.name}</li>)}
+                genres.map(genre => (
+                  <li key={`$(genre.id)-${Math.ceil(Math.random() * 9001)}`}>
+                    {" "}
+                    {genre.name}
+                  </li>
+                ))}
             </ul>
             <a href={homepage} target="_blank" rel="noopener noreferrer">
               MOVIE HOMEPAGE
@@ -127,10 +131,7 @@ class MovieInfo extends PureComponent {
                   REMOVE FROM COLLECTION
                 </button>
               ) : (
-                <button
-                  className="add-button"
-                  onClick={addMovieToCollection}
-                >
+                <button className="add-button" onClick={addMovieToCollection}>
                   ADD TO COLLECTION
                 </button>
               )}
@@ -146,11 +147,16 @@ class MovieInfo extends PureComponent {
         <h2>MOVIE CAST:</h2>
         <ul className="movie-cast">
           {cast &&
-            cast.map(actor => <ActorCard key={`$(actor.cast_id)-${Math.ceil(Math.random()*9001)}`} actor={actor} />)}
+            cast.map(actor => (
+              <ActorCard
+                key={`$(actor.cast_id)-${Math.ceil(Math.random() * 9001)}`}
+                actor={actor}
+              />
+            ))}
         </ul>
       </div>
     ) : null;
   }
 }
 
-export default withRouter(MovieInfo);
+export default MovieInfo;

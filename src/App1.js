@@ -57,9 +57,8 @@ class App1 extends Component {
     const { searchPage, adult, searchTerm } = this.state;
     event.preventDefault();
     API.searchMovie(searchTerm, adult, searchPage).then(movies =>
-      this.setState(
-        { searchResults: movies },
-        () => this.props.history.push(`/search/${searchTerm}/${searchPage}`)
+      this.setState({ searchResults: movies }, () =>
+        this.props.history.push(`/search/${searchTerm}/${searchPage}`)
       )
     );
   };
@@ -80,7 +79,11 @@ class App1 extends Component {
           <Switch>
             <Route path="/" exact component={LandingPage} />
             <PrivateRoute path="/movies" exact component={MovieList} />
-            <PrivateRoute path="/movies/random" exact component={RandomMovies} />
+            <PrivateRoute
+              path="/movies/random"
+              exact
+              component={RandomMovies}
+            />
             <Route
               path="/search/:search/:page"
               exact
@@ -98,7 +101,10 @@ class App1 extends Component {
               component={Collection}
               attr={{ name: "Col" }}
             />
-            <Route path="/actor/:id" render={routeProps => <ActorMovies {...routeProps} />} />
+            <Route
+              path="/actor/:id"
+              render={routeProps => <ActorMovies {...routeProps} />}
+            />
             <Route
               path="/movie/:id"
               render={routeProps => (
