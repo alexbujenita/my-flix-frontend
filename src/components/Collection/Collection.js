@@ -21,17 +21,6 @@ class Collection extends Component {
     );
   }
 
-  getMovies = page => {
-    API.getMovies(page).then(movies =>
-      this.setState({ movies: [...this.state.movies, ...movies] })
-    );
-  };
-
-  getMoreMovies = () => {
-    this.setState({ page: this.state.page + 1 });
-    this.getMovies(this.state.page);
-  };
-
   render() {
     const { movies, genres } = this.state;
     const { selectMovie } = this;

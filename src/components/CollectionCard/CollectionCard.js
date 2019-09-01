@@ -13,7 +13,7 @@ const CollectionCard = ({ movie }) => {
             src={
               movie_poster_path
                 ? `https://image.tmdb.org/t/p/w500${movie_poster_path}`
-                : "https://d994l96tlvogv.cloudfront.net/uploads/film/poster/poster-image-coming-soon-placeholder-all-logos-500-x-740_17928.png"
+                : "http://wearetheranch.com/wp-content/uploads/2016/01/poster-placeholder.jpg"
             }
             alt="poster"
           />
