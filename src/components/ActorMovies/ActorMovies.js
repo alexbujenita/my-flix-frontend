@@ -1,23 +1,46 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
+import { Link } from "react-router-dom";
+import API from "../../API";
+import { mapping } from "../../mappings";
+import MovieCard from "../MovieCard/MovieCard";
 
 class ActorMovies extends PureComponent {
   state = {
     movies: []
-  }
+  };
 
   // TRY With 1772
 
-  componentDidMount() {
+  async componentDidMount() {
     const actorId = this.props.match.params.id;
-    console.log(actorId);
-    
+    const movies = await API.getActorMovies(actorId);
+    this.setState({ movies });
   }
 
+  renderMovies = movies => {
+    return movies.map(movie => {
+      return (
+        <Link
+          to={`/movie/${movie.id}`}
+          key={`${movie.id}-${Math.ceil(Math.random() * 9001)}`}
+        >
+          <MovieCard movie={movie} genres={mapping.genres} />
+        </Link>
+      );
+    });
+  };
+
   render() {
-    console.log(this.props)
+    const { movies } = this.state;
     return (
-      <h1>Oh LALA</h1>
-    )
+      <div className="movies-container">
+        {movies && movies.length ? (
+          this.renderMovies(movies)
+        ) : (
+          <h1 style={{ color: "white" }}>Fetching movies, please wait...</h1>
+        )}
+      </div>
+    );
   }
 }
 
