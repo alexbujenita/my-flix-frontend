@@ -1,0 +1,1 @@
+export { allMovies } from './allMovies';

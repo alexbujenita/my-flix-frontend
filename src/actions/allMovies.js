@@ -1,0 +1,2 @@
+export const ALL_MOVIES = 'ALL_MOVIES';
+export const ALL_MOVIES_REDUCER = 'ALL_MOVIES_REDUCER';

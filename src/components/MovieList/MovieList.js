@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 import InfiniteScroll from "react-infinite-scroll-component";
+import { ALL_MOVIES } from "../../actions/allMovies";
 
 import "./MovieList.css";
 
@@ -18,11 +20,16 @@ class MovieList extends Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, 0);
-    this.getMovies(this.state.page);
+    window.scrollTo(0, 0);    
+    this.getMovies(1)
   }
 
   getMovies = page => {
+    this.props.dispatch({
+      type: ALL_MOVIES,
+      page
+    });
+    
     API.getMovies(page).then(movies =>
       this.setState({ movies: [...this.state.movies, ...movies] })
     );
@@ -61,4 +68,4 @@ class MovieList extends Component {
   }
 }
 
-export default MovieList;
+export default connect(null, null, null)(MovieList);
