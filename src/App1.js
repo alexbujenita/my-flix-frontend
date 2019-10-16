@@ -15,7 +15,6 @@ import Collection from "./components/Collection/Collection";
 import RandomMovies from "./components/RandomMovies/RandomMovies";
 import ActorMovies from "./components/ActorMovies/ActorMovies";
 
-
 class App1 extends Component {
   state = {
     myMovieIds: [],

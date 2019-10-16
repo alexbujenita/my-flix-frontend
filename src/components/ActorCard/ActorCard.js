@@ -5,7 +5,7 @@ import "./ActorCard.css";
 
 const ActorCard = ({ actor }) => {
   const { profile_path, name, character, id } = actor;
-  console.log(actor);
+  // console.log(actor);
   return (
     <div
       key={`$(name)-${Math.ceil(Math.random() * 9001)}`}

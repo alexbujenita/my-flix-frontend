@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -8,8 +8,7 @@ import { ALL_MOVIES } from "../../actions/allMovies";
 import "./MovieList.css";
 
 import MovieCard from "../MovieCard/MovieCard";
-import { mapping } from '../../mappings'
-import API from "../../API";
+import { mapping } from "../../mappings";
 
 class MovieList extends Component {
   state = {
@@ -20,8 +19,11 @@ class MovieList extends Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, 0);    
-    this.getMovies(1)
+    const { movies } = this.props;
+    window.scrollTo(0, 0);
+    if (!movies.length) {
+      this.getMovies(1);
+    }
   }
 
   getMovies = page => {
@@ -29,21 +31,20 @@ class MovieList extends Component {
       type: ALL_MOVIES,
       page
     });
-    
-    API.getMovies(page).then(movies =>
-      this.setState({ movies: [...this.state.movies, ...movies] })
-    );
   };
 
   getMoreMovies = () => {
-    this.setState({ page: this.state.page + 1 });
-    this.getMovies(this.state.page);
+    console.log(this.state.page)
+    this.setState({ page: this.state.page + 1 }, () => {
+      this.getMovies(this.state.page);
+    });
   };
 
   render() {
-    const { movies, genres } = this.state;
+    const { movies } = this.props;
+    const { genres } = this.state;
     const { getMoreMovies, selectMovie } = this;
-
+    console.log(this.props)
     return (
       <div className="movies-container">
         <InfiniteScroll
@@ -68,4 +69,15 @@ class MovieList extends Component {
   }
 }
 
-export default connect(null, null, null)(MovieList);
+function mapStateToProps(state) {
+  console.log(state.allMovies)
+  return {
+    movies: state.allMovies
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null,
+  null
+)(MovieList);
