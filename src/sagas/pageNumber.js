@@ -1,6 +1,5 @@
 import { INCREMENT_PAGE, UPDATE_PAGE } from '../actions/incrementPage';
-import { call, put, takeLatest } from 'redux-saga/effects';
-import API from '../API';
+import { put, takeLatest } from 'redux-saga/effects';
 
 export function* watchForPage() {
   yield takeLatest(INCREMENT_PAGE, updatePage)

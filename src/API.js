@@ -44,7 +44,7 @@ class API {
 
   // GET ALL MOVIES FOR AN ACTOR
   static getActorMovies(actorId) {
-    return fetch(`${this.baseUrl}/actor/${actorId}`).then(resp => resp.json());
+    return fetch(`http://localhost:3000/actor/${actorId}`).then(resp => resp.json());
   }
   //
 

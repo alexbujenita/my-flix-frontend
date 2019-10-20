@@ -1,27 +1,28 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import API from "../../API";
+import { connect } from "react-redux";
+
 import { mapping } from "../../mappings";
 import MovieCard from "../MovieCard/MovieCard";
 
-class ActorMovies extends PureComponent {
-  state = {
-    movies: []
-  };
+import { FETCH_ACTOR_MOVIES } from "../../actions/actorMovies";
 
-  async componentDidMount() {
+class ActorMovies extends PureComponent {
+
+  componentDidMount() {
     const actorId = this.props.match.params.id;
-    const movies = await API.getActorMovies(actorId);
-    this.setState({ movies });
+    if(!this.props.actorMoviesForId) {      
+      this.props.dispatch({
+        type: FETCH_ACTOR_MOVIES,
+        actorId
+      });
+    }
   }
 
   renderMovies = movies => {
     return movies.map(movie => {
       return (
-        <Link
-          to={`/movie/${movie.id}`}
-          key={`${movie.id}-${Math.ceil(Math.random() * 9001)}`}
-        >
+        <Link to={`/movie/${movie.id}`} key={`${movie.id}-${movie.title}`}>
           <MovieCard movie={movie} genres={mapping.genres} />
         </Link>
       );
@@ -29,11 +30,12 @@ class ActorMovies extends PureComponent {
   };
 
   render() {
-    const { movies } = this.state;
+    const { actorMoviesForId } = this.props;    
+
     return (
       <div className="movies-container">
-        {movies && movies.length ? (
-          this.renderMovies(movies)
+        {actorMoviesForId && actorMoviesForId.length ? (
+          this.renderMovies(actorMoviesForId)
         ) : (
           <h1 style={{ color: "white" }}>Fetching movies, please wait...</h1>
         )}
@@ -42,4 +44,8 @@ class ActorMovies extends PureComponent {
   }
 }
 
-export default ActorMovies;
+const mapStateToProps = (state, ownProps) => ({
+  actorMoviesForId: state.actorMovies[ownProps.match.params.id]
+});
+
+export default connect(mapStateToProps)(ActorMovies);
