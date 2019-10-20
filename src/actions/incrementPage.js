@@ -1,0 +1,2 @@
+export const INCREMENT_PAGE = 'INCREMENT_PAGE';
+export const UPDATE_PAGE = 'UPDATE_PAGE';
