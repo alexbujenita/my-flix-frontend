@@ -102,11 +102,10 @@ class MovieInfo extends PureComponent {
             </div>
             <p> {overview}</p>
             <ul>
-              GENRES:{" "}
+              GENRES:
               {genres &&
                 genres.map(genre => (
-                  <li key={`$(genre.id)-${Math.ceil(Math.random() * 9001)}`}>
-                    {" "}
+                  <li key={`${genre.id}`}>
                     {genre.name}
                   </li>
                 ))}
@@ -149,7 +148,7 @@ class MovieInfo extends PureComponent {
           {cast &&
             cast.map(actor => (
               <ActorCard
-                key={`$(actor.cast_id)-${Math.ceil(Math.random() * 9001)}`}
+                key={`${actor.cast_id}`}
                 actor={actor}
               />
             ))}
