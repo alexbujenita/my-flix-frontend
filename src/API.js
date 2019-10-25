@@ -38,13 +38,13 @@ class API {
 
   // GET RANDOM MOVIES
   static getRandomMovies() {
-    return fetch(this.baseUrl + "/movies/random").then(resp => resp.json());
+    return fetch( "http://localhost:3000/movies/random").then(resp => resp.json());
   }
   //
 
   // GET ALL MOVIES FOR AN ACTOR
   static getActorMovies(actorId) {
-    return fetch(`${this.baseUrl}/actor/${actorId}`).then(resp => resp.json());
+    return fetch(`http://localhost:3000/actor/${actorId}`).then(resp => resp.json());
   }
   //
 
@@ -84,7 +84,7 @@ class API {
   //
 
   static getMovies(page) {
-    return fetch(this.baseUrl + "/movies", {
+    return fetch("http://localhost:3000/movies", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page })
