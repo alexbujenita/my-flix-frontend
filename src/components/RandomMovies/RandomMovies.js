@@ -5,6 +5,9 @@ import MovieCard from "../MovieCard/MovieCard";
 import { mapping } from "../../mappings";
 import "./RandomMovies.css";
 
+import { connect } from "react-redux";
+import { FETCH_RANDOM_MOVIES } from '../../actions/randomMovies';
+
 class RandomMovies extends PureComponent {
   state = {
     movies: [],
@@ -14,6 +17,7 @@ class RandomMovies extends PureComponent {
   async componentDidMount() {
     const movies = await API.getRandomMovies();
     this.setState({ movies });
+    this.props.dispatch({ type: FETCH_RANDOM_MOVIES })
   }
 
   renderMovies = movies => {
@@ -37,6 +41,7 @@ class RandomMovies extends PureComponent {
 
   render() {
     const { movies, disabled } = this.state;
+    console.log(this.props)
     return (
       <div className="movies-container">
         {movies && movies.length ? (
@@ -58,4 +63,10 @@ class RandomMovies extends PureComponent {
   }
 }
 
-export default RandomMovies;
+const mapStateToProps = ({ randomMovies }) => {
+  return {
+    randomMovies
+  }
+}
+
+export default connect(mapStateToProps)(RandomMovies);

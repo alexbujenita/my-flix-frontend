@@ -38,7 +38,7 @@ class API {
 
   // GET RANDOM MOVIES
   static getRandomMovies() {
-    return fetch(this.baseUrl + "/movies/random").then(resp => resp.json());
+    return fetch( "http://localhost:3000/movies/random").then(resp => resp.json());
   }
   //
 
