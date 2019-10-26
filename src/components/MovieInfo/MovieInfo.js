@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 import YouTube from "react-youtube";
 
 import "./MovieInfo.css";
@@ -6,37 +7,28 @@ import "./MovieInfo.css";
 import ActorCard from "../ActorCard/ActorCard";
 import API from "../../API";
 
+import { FETCH_MOVIE_INFO } from "../../actions/movieInfo";
+
 class MovieInfo extends PureComponent {
   state = {
-    userMovies: [],
-    movie: {},
-    genre: [],
-    cast: [],
-    trailer: ""
+    userMovies: []
   };
   componentDidMount() {
-    const { match } = this.props;
+    const { id } = this.props.match.params;
+    if (!this.props.movieWithId) {
+      this.props.dispatch({
+        type: FETCH_MOVIE_INFO,
+        movieId: id
+      });
+    }
     API.getUserMovies(localStorage.getItem("token")).then(result => {
       this.setState({ userMovies: result });
-    });
-    API.getOneMovie(match.params.id).then(movie => {
-      this.setState({
-        movie,
-        genre: movie.genre
-      });
-    });
-    API.getMovieCredits(match.params.id).then(cast => {
-      this.setState({ cast });
-    });
-    API.getMovieTrailers(match.params.id).then(trailers => {
-      const trailer = trailers.find(trail => trail.type === "Trailer");
-      this.setState({ trailer });
     });
     window.scrollTo(0, 0);
   }
 
   addMovieToCollection = () => {
-    const { movie } = this.state;
+    const { movie } = this.props.movieWithId;
     const token = localStorage.getItem("token");
     API.addMovieToCollection(movie, token).then(() => {
       API.getUserMovies(localStorage.getItem("token")).then(result => {
@@ -46,7 +38,7 @@ class MovieInfo extends PureComponent {
   };
 
   removeMovieFromCollection = () => {
-    const { movie } = this.state;
+    const { movie } = this.props.movieWithId;
     const token = localStorage.getItem("token");
 
     API.removeMovieFromCollection(movie, token).then(() => {
@@ -56,14 +48,21 @@ class MovieInfo extends PureComponent {
     });
   };
   belongsToUser = () => {
-    const { userMovies, movie } = this.state;
+    const { userMovies } = this.state;
+    const { movie } = this.props.movieWithId
     const userMoviesIds = userMovies.map(m => m.movie_ref_id);
     const isIncluded = userMoviesIds.includes(movie.id);
     return isIncluded;
   };
 
   render() {
-    const { movie, cast, trailer } = this.state;
+    
+    
+    const { movieWithId } = this.props;
+    if (!movieWithId) return null;
+
+    const { movie, cast, trailer } = movieWithId;
+
     const {
       poster_path,
       original_title,
@@ -78,14 +77,14 @@ class MovieInfo extends PureComponent {
       belongsToUser
     } = this;
     const opts = {
-      height: "390",
+      height: "400",
       width: "640",
       playerVars: {
         autoplay: 0
       }
     };
 
-    return movie ? (
+    return  movie ? (
       <div className="show-movie">
         <div className="show-movie-details">
           <div className="img-movie">
@@ -104,11 +103,7 @@ class MovieInfo extends PureComponent {
             <ul>
               GENRES:
               {genres &&
-                genres.map(genre => (
-                  <li key={`${genre.id}`}>
-                    {genre.name}
-                  </li>
-                ))}
+                genres.map(genre => <li key={`${genre.id}`}>{genre.name}</li>)}
             </ul>
             <a href={homepage} target="_blank" rel="noopener noreferrer">
               MOVIE HOMEPAGE
@@ -139,7 +134,7 @@ class MovieInfo extends PureComponent {
         </div>
         <div>
           <YouTube
-            videoId={trailer ? trailer.key : "3cYBfuphkuE"}
+            videoId={trailer ? trailer[0].key : "3cYBfuphkuE"}
             opts={opts}
           />
         </div>
@@ -147,10 +142,7 @@ class MovieInfo extends PureComponent {
         <ul className="movie-cast">
           {cast &&
             cast.map(actor => (
-              <ActorCard
-                key={`${actor.cast_id}`}
-                actor={actor}
-              />
+              <ActorCard key={`${actor.cast_id}`} actor={actor} />
             ))}
         </ul>
       </div>
@@ -158,4 +150,8 @@ class MovieInfo extends PureComponent {
   }
 }
 
-export default MovieInfo;
+const mapStateToProps = (state, ownProps) => ({
+  movieWithId: state.movieInfo["movie-" + ownProps.match.params.id]
+});
+
+export default connect(mapStateToProps)(MovieInfo);

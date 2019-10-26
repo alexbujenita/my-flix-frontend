@@ -1,4 +1,5 @@
+export { movieInfo } from './movieInfo';
 export { allMovies } from './allMovies';
-export { pageNumber } from './incrementPage';
 export { actorMovies } from './actorMovies';
+export { pageNumber } from './incrementPage';
 export { randomMovies } from './randomMovies';

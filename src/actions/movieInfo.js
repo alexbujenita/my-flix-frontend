@@ -1,0 +1,2 @@
+export const FETCH_MOVIE_INFO = 'FETCH_MOVIE_INFO';
+export const ADD_MOVIE_INFO = 'ADD_MOVIE_INFO';
