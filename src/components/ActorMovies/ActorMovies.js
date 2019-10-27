@@ -17,6 +17,7 @@ class ActorMovies extends PureComponent {
         actorId
       });
     }
+    window.scrollTo(0, 0);
   }
 
   renderMovies = movies => {

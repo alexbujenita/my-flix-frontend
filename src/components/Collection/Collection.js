@@ -1,44 +1,48 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./Collection.css";
+import { FETCH_USER_MOVIES } from '../../actions/userMovies';
 
-import API from "../../API";
+
 import CollectionCard from "../CollectionCard/CollectionCard";
 import { mapping } from "../../mappings";
 
 class Collection extends Component {
-  state = {
-    movies: [],
-    page: 1,
-    genres: mapping.genres
-  };
 
   componentDidMount() {
+    const token = localStorage.getItem("token");
+    const { userMovies } = this.props;
+    if(!userMovies.length) {
+      this.props.dispatch({
+        type: FETCH_USER_MOVIES,
+        token
+      })
+    }
     window.scrollTo(0, 0);
-    API.getUserMovies(localStorage.getItem("token")).then(movies =>
-      this.setState({ movies })
-    );
   }
 
   render() {
-    const { movies, genres } = this.state;
-    const { selectMovie } = this;
-
+    const { userMovies } = this.props;
     return (
       <div className="col-container">
-        {movies.map(movie => (
-          <Link key={movie.id} to={`/movie/${movie.movie_ref_id}`}>
-            <CollectionCard
-              movie={movie}
-              selectMovie={selectMovie}
-              genres={genres}
-            />
-          </Link>
-        ))}
+        {userMovies &&
+          userMovies.length &&
+          userMovies.map(movie => (
+            <Link key={movie.id} to={`/movie/${movie.movie_ref_id}`}>
+              <CollectionCard movie={movie} genres={mapping.genres} />
+            </Link>
+          ))}
       </div>
     );
   }
 }
 
-export default Collection;
+function mapStateToProps(state) {
+  return {
+    userMovies: state.userMovies
+  };
+}
+
+export default connect(mapStateToProps)(Collection);

@@ -24,9 +24,9 @@ class API {
   }
 
   //
-  // GET USER FAVORITES
+  // GET USER MOVIES
   static getUserMovies(token) {
-    return fetch(this.baseUrl + "/favorites", {
+    return fetch("http://localhost:3000/favorites", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

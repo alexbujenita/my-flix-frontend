@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ALL_MOVIES } from "../../actions/allMovies";
 import { INCREMENT_PAGE } from '../../actions/incrementPage';
+import { FETCH_USER_MOVIES } from '../../actions/userMovies';
 
 
 import "./MovieList.css";
@@ -19,11 +20,18 @@ class MovieList extends PureComponent {
   };
 
   componentDidMount() {
-    const { movies, pageNumber } = this.props;
-    window.scrollTo(0, 0);
+    const token = localStorage.getItem("token");
+    const { movies, pageNumber, userMovies } = this.props;
     if (!movies.length) {
       this.getMovies(pageNumber);
     }
+    if(!userMovies.length) {
+      this.props.dispatch({
+        type: FETCH_USER_MOVIES,
+        token
+      })
+    }
+    window.scrollTo(0, 0);
   }
 
   getMovies = page => {
@@ -75,7 +83,8 @@ class MovieList extends PureComponent {
 function mapStateToProps(state) {
   return {
     movies: state.allMovies,
-    pageNumber: state.pageNumber
+    pageNumber: state.pageNumber,
+    userMovies: state.userMovies
   }
 }
 

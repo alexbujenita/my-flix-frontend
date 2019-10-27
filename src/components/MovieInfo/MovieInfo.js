@@ -8,60 +8,67 @@ import ActorCard from "../ActorCard/ActorCard";
 import API from "../../API";
 
 import { FETCH_MOVIE_INFO } from "../../actions/movieInfo";
+import { FETCH_USER_MOVIES } from "../../actions/userMovies";
 
 class MovieInfo extends PureComponent {
-  state = {
-    userMovies: []
-  };
+
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { userMovies } = this.props;
+    const token = localStorage.getItem("token");
     if (!this.props.movieWithId) {
       this.props.dispatch({
         type: FETCH_MOVIE_INFO,
         movieId: id
       });
+
+      if (!userMovies.length) {
+        this.dispatchUserMovieAction(token);
+      }
     }
-    API.getUserMovies(localStorage.getItem("token")).then(result => {
-      this.setState({ userMovies: result });
-    });
     window.scrollTo(0, 0);
   }
+
+  dispatchUserMovieAction = token => {
+    this.props.dispatch({
+      type: FETCH_USER_MOVIES,
+      token
+    });
+  };
 
   addMovieToCollection = () => {
     const { movie } = this.props.movieWithId;
     const token = localStorage.getItem("token");
     API.addMovieToCollection(movie, token).then(() => {
-      API.getUserMovies(localStorage.getItem("token")).then(result => {
-        this.setState({ userMovies: result });
-      });
+      this.dispatchUserMovieAction(token);
     });
   };
 
   removeMovieFromCollection = () => {
     const { movie } = this.props.movieWithId;
     const token = localStorage.getItem("token");
-
     API.removeMovieFromCollection(movie, token).then(() => {
-      API.getUserMovies(localStorage.getItem("token")).then(result => {
-        this.setState({ userMovies: result });
-      });
+      this.dispatchUserMovieAction(token);
     });
   };
   belongsToUser = () => {
-    const { userMovies } = this.state;
-    const { movie } = this.props.movieWithId
+    const { userMovies } = this.props;
+    const { movie } = this.props.movieWithId;
     const userMoviesIds = userMovies.map(m => m.movie_ref_id);
     const isIncluded = userMoviesIds.includes(movie.id);
     return isIncluded;
   };
 
   render() {
-    
-    
+
     const { movieWithId } = this.props;
     if (!movieWithId) return null;
+    const { movie, cast } = movieWithId;
 
-    const { movie, cast, trailer } = movieWithId;
+    let { trailer = [{ key: "3cYBfuphkuE" }] } = movieWithId;
+    if (!trailer.length) {
+      trailer = [{ key: "3cYBfuphkuE" }];
+    }
 
     const {
       poster_path,
@@ -84,7 +91,7 @@ class MovieInfo extends PureComponent {
       }
     };
 
-    return  movie ? (
+    return movie ? (
       <div className="show-movie">
         <div className="show-movie-details">
           <div className="img-movie">
@@ -151,7 +158,8 @@ class MovieInfo extends PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  movieWithId: state.movieInfo["movie-" + ownProps.match.params.id]
+  movieWithId: state.movieInfo["movie-" + ownProps.match.params.id],
+  userMovies: state.userMovies
 });
 
 export default connect(mapStateToProps)(MovieInfo);

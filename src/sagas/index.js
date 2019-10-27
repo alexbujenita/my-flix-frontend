@@ -5,6 +5,7 @@ import { watchForPage } from "./pageNumber";
 import { watchForActorMovies } from "./actorMovies";
 import { watchForRandomMovies } from "./randomMovies";
 import { watchForMovieInfo } from "./movieInfo";
+import { watchForUserMovies } from "./userMovies";
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     fork(watchForPage),
     fork(watchForActorMovies),
     fork(watchForRandomMovies),
-    fork(watchForMovieInfo)
+    fork(watchForMovieInfo),
+    fork(watchForUserMovies)
   ]);
 }

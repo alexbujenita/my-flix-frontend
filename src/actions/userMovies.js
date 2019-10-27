@@ -1,0 +1,2 @@
+export const FETCH_USER_MOVIES = 'FETCH_USER_MOVIES';
+export const ADD_USER_MOVIES = 'ADD_USER_MOVIES';
