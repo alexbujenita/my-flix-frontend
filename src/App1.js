@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./App.css";
 import { Route, Switch, withRouter } from "react-router-dom";
+import "./App.css";
 
 import MovieList from "./components/MovieList/MovieList";
 import SideBar from "./components/SideBar/SideBar";
@@ -18,28 +18,11 @@ import ActorMovies from "./components/ActorMovies/ActorMovies";
 class App1 extends Component {
   state = {
     myMovieIds: [],
-    userMovies: [],
     myMovies: [],
     searchTerm: "",
     searchPage: 1,
     adult: false,
     searchResults: []
-  };
-
-  componentDidMount() {
-    API.getUserMovies(localStorage.getItem("token")).then(userMovies =>
-      this.setState({ userMovies })
-    );
-  }
-
-  addMovieToCollection = movieId => {
-    this.setState({ myMovieIds: [...this.state.myMovieIds, movieId] });
-  };
-
-  removeMovieFromCollection = movieId => {
-    this.setState({
-      myMovieIds: this.state.myMovieIds.filter(id => id !== movieId)
-    });
   };
 
   // SEARCH
@@ -108,7 +91,7 @@ class App1 extends Component {
             <Route
               path="/movie/:id"
               render={routeProps => (
-                <MovieInfo {...routeProps} userMovies={this.state.userMovies} />
+                <MovieInfo {...routeProps} />
               )}
             />
           </Switch>

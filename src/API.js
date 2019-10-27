@@ -24,9 +24,9 @@ class API {
   }
 
   //
-  // GET USER FAVORITES
+  // GET USER MOVIES
   static getUserMovies(token) {
-    return fetch(this.baseUrl + "/favorites", {
+    return fetch("http://localhost:3000/favorites", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ class API {
   }
 
   static getOneMovie = movieId => {
-    return fetch(this.baseUrl + "/movies/1", {
+    return fetch("http://localhost:3000/movies/1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ movie_id: movieId })
@@ -116,7 +116,7 @@ class API {
   };
 
   static getMovieCredits = movieId => {
-    return fetch(this.baseUrl + "/credits", {
+    return fetch("http://localhost:3000/credits", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ movie_id: movieId })
@@ -126,7 +126,7 @@ class API {
   };
 
   static getMovieTrailers = movieId => {
-    return fetch(this.baseUrl + "/trailers", {
+    return fetch("http://localhost:3000/trailers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ movie_id: movieId })
