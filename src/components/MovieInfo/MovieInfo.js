@@ -63,7 +63,7 @@ class MovieInfo extends PureComponent {
 
     const { movieWithId } = this.props;
     if (!movieWithId) return null;
-    const { movie, cast } = movieWithId;
+    const { movie, cast: { cast } } = movieWithId;
 
     let { trailer = [{ key: "3cYBfuphkuE" }] } = movieWithId;
     if (!trailer.length) {

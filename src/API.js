@@ -122,7 +122,7 @@ class API {
       body: JSON.stringify({ movie_id: movieId })
     })
       .then(resp => resp.json())
-      .then(json => json.cast);
+      .then(json => json);
   };
 
   static getMovieTrailers = movieId => {
