@@ -25,7 +25,8 @@
     margin-top: 27px;
 }
 .movie-cast {
-    margin-right: 100px;
+    display: flex;
+    flex-flow: wrap;
 }
 a, h2, h1 {
     color: white;

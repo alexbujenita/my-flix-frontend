@@ -146,12 +146,12 @@ class MovieInfo extends PureComponent {
           />
         </div>
         <h2>MOVIE CAST:</h2>
-        <ul className="movie-cast">
+        <div className="movie-cast">
           {cast &&
             cast.map(actor => (
               <ActorCard key={`${actor.cast_id}`} actor={actor} />
             ))}
-        </ul>
+        </div>
       </div>
     ) : null;
   }
