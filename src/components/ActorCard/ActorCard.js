@@ -40,4 +40,4 @@ const ActorCard = ({ actor }) => {
   );
 };
 
-export default ActorCard;
+export default React.memo(ActorCard);

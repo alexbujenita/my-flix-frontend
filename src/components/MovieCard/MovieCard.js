@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./MovieCard.css";
 
-class MovieCard extends Component {
+class MovieCard extends PureComponent {
   render() {
     const { movie, genres } = this.props;
     const { poster_path, title, release_date, genre_ids, overview } = movie;

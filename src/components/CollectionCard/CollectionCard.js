@@ -26,4 +26,4 @@ const CollectionCard = ({ movie }) => {
   );
 };
 
-export default CollectionCard;
+export default React.memo(CollectionCard);

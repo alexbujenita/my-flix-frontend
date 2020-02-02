@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.css";
 
@@ -15,7 +15,7 @@ import Collection from "./components/Collection/Collection";
 import RandomMovies from "./components/RandomMovies/RandomMovies";
 import ActorMovies from "./components/ActorMovies/ActorMovies";
 
-class App1 extends Component {
+class App1 extends PureComponent {
   state = {
     myMovieIds: [],
     myMovies: [],

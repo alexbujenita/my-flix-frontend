@@ -24,4 +24,4 @@ const SearchResults = ({ movies }) => {
   );
 };
 
-export default SearchResults;
+export default React.memo(SearchResults);

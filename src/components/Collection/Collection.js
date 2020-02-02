@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -9,7 +9,7 @@ import { FETCH_USER_MOVIES } from '../../actions/userMovies';
 import CollectionCard from "../CollectionCard/CollectionCard";
 import { mapping } from "../../mappings";
 
-class Collection extends Component {
+class Collection extends PureComponent {
 
   componentDidMount() {
     const token = localStorage.getItem("token");
