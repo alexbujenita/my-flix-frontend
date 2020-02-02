@@ -11,6 +11,7 @@ class MovieCard extends Component {
           <div className="poster">
             <img
               className="card-image"
+              loading="lazy"
               src={
                 poster_path
                   ? `https://image.tmdb.org/t/p/w500${poster_path}`

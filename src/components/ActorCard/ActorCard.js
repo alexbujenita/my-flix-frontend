@@ -14,6 +14,7 @@ const ActorCard = ({ actor }) => {
       <div className="actor-card-inner">
         <div className="actor-card-front">
           <img
+          loading="lazy"
             src={
               profile_path
                 ? `https://image.tmdb.org/t/p/w500${profile_path}`
