@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import API from "../../API";
 import "./LogIn.css";
 
-class LogIn extends Component {
+class LogIn extends PureComponent {
   state = {
     email: "",
     password: ""

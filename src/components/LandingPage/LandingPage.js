@@ -23,4 +23,4 @@ const LandingPage = () => {
   }
 
 
-export default LandingPage
+export default React.memo(LandingPage)

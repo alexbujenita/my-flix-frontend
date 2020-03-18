@@ -14,10 +14,6 @@ import MovieCard from "../MovieCard/MovieCard";
 import { mapping } from "../../mappings";
 
 class MovieList extends PureComponent {
-  state = {
-    userMovies: [],
-    genres: mapping.genres
-  };
 
   componentDidMount() {
     const token = localStorage.getItem("token");
@@ -53,8 +49,7 @@ class MovieList extends PureComponent {
   };
 
   render() {
-    const { movies } = this.props;
-    const { genres } = this.state;
+    const { movies, userMovies } = this.props;
     const { getMoreMovies, selectMovie } = this;
     return (
       <div className="movies-container">
@@ -68,9 +63,9 @@ class MovieList extends PureComponent {
             <Link key={movie.id} to={`/movie/${movie.id}`}>
               <MovieCard
                 movie={movie}
-                userMovies={this.state.userMovies}
+                userMovies={userMovies}
                 selectMovie={selectMovie}
-                genres={genres}
+                genres={mapping.genres}
               />
             </Link>
           ))}
