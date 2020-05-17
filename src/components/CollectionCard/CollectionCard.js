@@ -1,9 +1,8 @@
 import React from "react";
 import "./CollectionCard.css";
 
-const CollectionCard = ({ movie }) => {
-  const { movie_poster_path, movie_title } = movie;
-
+const CollectionCard = ({ movie: { movie_poster_path, movie_title } }) => {
+  
   return (
     <div className="movie-card">
       <div className="card">
