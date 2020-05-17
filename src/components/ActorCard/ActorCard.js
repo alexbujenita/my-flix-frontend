@@ -4,9 +4,8 @@ import LazyLoad from "react-lazyload";
 
 import "./ActorCard.css";
 
-const ActorCard = ({ actor }) => {
-  const { profile_path, name, character, id, gender } = actor;
-console.log(gender)
+const ActorCard = ({ actor: { profile_path, name, character, id } }) => {
+
   return (
     <LazyLoad height={100} width={145} once offset={30}>
       <div key={id} className="actor-card">
